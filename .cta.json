@@ -1,5 +1,5 @@
 {
-  "projectName": "tot-rocking-beats",
+  "projectName": "tanstack-start-supabase-auth",
   "mode": "file-router",
   "typescript": true,
   "tailwind": true,
