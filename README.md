@@ -1,5 +1,11 @@
 # TanStack Start + Supabase Auth
 
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)
+![React](https://img.shields.io/badge/React-19-blue)
+![TanStack Start](https://img.shields.io/badge/TanStack_Start-latest-orange)
+![Supabase](https://img.shields.io/badge/Supabase-Auth-green)
+
 A starter template demonstrating **TanStack Start** with **Supabase Auth**, protected routes, and **shadcn/ui**.
 
 ## What's Included
@@ -45,14 +51,14 @@ Get the values from Supabase:
 npx supabase status
 ```
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `VITE_SUPABASE_URL` | Yes | Supabase API URL |
-| `VITE_SUPABASE_ANON_KEY` | Yes | Supabase anonymous key |
-| `SUPABASE_SECRET_KEY` | Yes | Supabase service role key (for seeding) |
-| `VERCEL_TOKEN` | No | Vercel deployment token |
-| `VERCEL_ORG_ID` | No | Vercel organization ID |
-| `VERCEL_PROJECT_ID` | No | Vercel project ID |
+| Variable                 | Required | Description                             |
+| ------------------------ | -------- | --------------------------------------- |
+| `VITE_SUPABASE_URL`      | Yes      | Supabase API URL                        |
+| `VITE_SUPABASE_ANON_KEY` | Yes      | Supabase anonymous key                  |
+| `SUPABASE_SECRET_KEY`    | Yes      | Supabase service role key (for seeding) |
+| `VERCEL_TOKEN`           | No       | Vercel deployment token                 |
+| `VERCEL_ORG_ID`          | No       | Vercel organization ID                  |
+| `VERCEL_PROJECT_ID`      | No       | Vercel project ID                       |
 
 ### Reset Database & Seed
 
@@ -62,10 +68,10 @@ npm run db:reset
 
 This runs migrations, generates types, and seeds two test users:
 
-| Email | Password | Display Name |
-|-------|----------|-------------|
-| `user-a@example.com` | `password123` | Alice |
-| `user-b@example.com` | `password123` | Bob |
+| Email                | Password      | Display Name |
+| -------------------- | ------------- | ------------ |
+| `user-a@example.com` | `password123` | Alice        |
+| `user-b@example.com` | `password123` | Bob          |
 
 ### Run Dev Server
 
@@ -77,14 +83,14 @@ The app runs at [http://127.0.0.1:3000](http://127.0.0.1:3000).
 
 ## Routes
 
-| Route | Description |
-|-------|-------------|
-| `/` | Landing page (redirects to `/dashboard` if authenticated) |
-| `/login` | Sign in / sign up |
-| `/logout` | Signs out and redirects to `/` |
-| `/forgot-password` | Request a password reset email |
-| `/reset-password` | Set a new password (via email link) |
-| `/dashboard` | Protected — requires authentication |
+| Route              | Description                                               |
+| ------------------ | --------------------------------------------------------- |
+| `/`                | Landing page (redirects to `/dashboard` if authenticated) |
+| `/login`           | Sign in / sign up                                         |
+| `/logout`          | Signs out and redirects to `/`                            |
+| `/forgot-password` | Request a password reset email                            |
+| `/reset-password`  | Set a new password (via email link)                       |
+| `/dashboard`       | Protected — requires authentication                       |
 
 ### Local Email Testing
 
@@ -131,13 +137,13 @@ Configured for Vercel deployment. Set the `VERCEL_*` environment variables and p
 
 ## Key Files
 
-| File | Purpose |
-|------|---------|
-| `src/routes/__root.tsx` | Root layout with `AuthProvider` and `Header` |
-| `src/routes/_authenticated.tsx` | Auth guard layout for protected routes |
-| `src/routes/_authenticated/dashboard.tsx` | Example protected page |
-| `src/context/AuthContext.tsx` | React context for auth state |
-| `src/utils/supabase.ts` | Supabase client singleton |
+| File                                      | Purpose                                      |
+| ----------------------------------------- | -------------------------------------------- |
+| `src/routes/__root.tsx`                   | Root layout with `AuthProvider` and `Header` |
+| `src/routes/_authenticated.tsx`           | Auth guard layout for protected routes       |
+| `src/routes/_authenticated/dashboard.tsx` | Example protected page                       |
+| `src/context/AuthContext.tsx`             | React context for auth state                 |
+| `src/utils/supabase.ts`                   | Supabase client singleton                    |
 
 ## Learn More
 
