@@ -15,6 +15,16 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/utils/supabase";
 
 export const Route = createFileRoute("/forgot-password")({
+	head: () => ({
+		meta: [
+			{ title: "Forgot Password | TanStack Start + Supabase Auth" },
+			{
+				name: "description",
+				content:
+					"Request a password reset link to regain access to your account.",
+			},
+		],
+	}),
 	component: ForgotPasswordPage,
 });
 

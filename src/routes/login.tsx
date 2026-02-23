@@ -20,6 +20,15 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/utils/supabase";
 
 export const Route = createFileRoute("/login")({
+	head: () => ({
+		meta: [
+			{ title: "Sign In | TanStack Start + Supabase Auth" },
+			{
+				name: "description",
+				content: "Sign in or create an account to access your dashboard.",
+			},
+		],
+	}),
 	async beforeLoad() {
 		const {
 			data: { session },

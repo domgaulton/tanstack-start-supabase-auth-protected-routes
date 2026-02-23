@@ -9,6 +9,12 @@ import {
 import { useAuth } from "@/context/AuthContext";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
+	head: () => ({
+		meta: [
+			{ title: "Dashboard | TanStack Start + Supabase Auth" },
+			{ name: "robots", content: "noindex" },
+		],
+	}),
 	component: DashboardPage,
 });
 

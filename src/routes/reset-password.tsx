@@ -15,6 +15,15 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/utils/supabase";
 
 export const Route = createFileRoute("/reset-password")({
+	head: () => ({
+		meta: [
+			{ title: "Reset Password | TanStack Start + Supabase Auth" },
+			{
+				name: "description",
+				content: "Set a new password for your account.",
+			},
+		],
+	}),
 	component: ResetPasswordPage,
 });
 
