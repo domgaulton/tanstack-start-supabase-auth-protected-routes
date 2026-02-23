@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+	BarChart3,
 	ExternalLink,
 	FileCode,
 	Github,
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/features")({
 			{
 				name: "description",
 				content:
-					"Explore the features included in this starter template: TanStack Start SSR, Supabase Auth, protected routes, shadcn/ui, Tailwind CSS v4, Biome, Vitest, and Vercel deployment.",
+					"Explore the features included in this starter template: TanStack Start SSR, Supabase Auth, protected routes, shadcn/ui, Tailwind CSS v4, Biome, Vitest, Vercel Analytics, and Vercel deployment.",
 			},
 			{
 				name: "robots",
@@ -78,6 +79,13 @@ function FeaturesPage() {
 			title: "GitHub Actions CI/CD",
 			description:
 				"Automated CI pipeline with type checking, linting, formatting, and test runs on every pull request. Deployment pipeline for Vercel included.",
+		},
+		{
+			icon: <BarChart3 className="w-10 h-10 text-blue-400" />,
+			title: "Vercel Analytics",
+			description:
+				"Built-in page view analytics via @vercel/analytics. Automatically tracks traffic in production with zero configuration required.",
+			link: "https://vercel.com/docs/analytics",
 		},
 		{
 			icon: <Rocket className="w-10 h-10 text-red-400" />,
