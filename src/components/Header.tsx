@@ -23,7 +23,7 @@ export default function Header() {
 						to={user ? "/dashboard" : "/"}
 						className="text-white hover:text-gray-300 transition-colors"
 					>
-						Starter
+						Home
 					</Link>
 				</h1>
 			</header>
