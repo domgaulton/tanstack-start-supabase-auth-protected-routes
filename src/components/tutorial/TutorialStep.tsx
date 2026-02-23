@@ -1,10 +1,38 @@
-import { type ReactNode, useState } from "react";
+import { Check, Copy } from "lucide-react";
+import { type ReactNode, useCallback, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface TutorialStepProps {
 	title: ReactNode;
 	description?: ReactNode;
 	autoChecked?: boolean;
+}
+
+export function CopyableCode({ children }: { children: string }) {
+	const [copied, setCopied] = useState(false);
+
+	const handleCopy = useCallback(() => {
+		navigator.clipboard.writeText(children).then(() => {
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		});
+	}, [children]);
+
+	return (
+		<button
+			type="button"
+			onClick={handleCopy}
+			className="inline-flex items-center gap-1 bg-slate-700 px-1.5 py-0.5 rounded text-gray-300 hover:bg-slate-600 transition-colors cursor-pointer"
+			aria-label={`Copy ${children} to clipboard`}
+		>
+			<code>{children}</code>
+			{copied ? (
+				<Check className="size-3 text-green-400" />
+			) : (
+				<Copy className="size-3 text-gray-500" />
+			)}
+		</button>
+	);
 }
 
 export function TutorialStep({

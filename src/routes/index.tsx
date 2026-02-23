@@ -127,6 +127,13 @@ function HomePage() {
 					<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
 						<DeploymentSteps />
 					</div>
+					<p className="text-sm text-gray-500 text-center">
+						Once you're set up, you can safely delete the{" "}
+						<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-400">
+							src/components/tutorial/
+						</code>{" "}
+						folder and remove these steps from your homepage.
+					</p>
 				</section>
 			)}
 

@@ -1,6 +1,6 @@
 import { Check, ChevronRight, Copy } from "lucide-react";
 import { useCallback, useState } from "react";
-import { TutorialStep } from "@/components/tutorial/TutorialStep";
+import { CopyableCode, TutorialStep } from "@/components/tutorial/TutorialStep";
 import { useSetupStatus } from "@/hooks/useSetupStatus";
 import { hasEnvFiles } from "@/utils/env";
 
@@ -77,7 +77,7 @@ export function ConnectSupabaseSteps() {
 					autoChecked={isHostedReachable}
 					description={
 						<div className="space-y-3 pt-1">
-							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
+							<ol className="space-y-1.5 text-sm text-gray-400 list-[lower-alpha] list-inside ml-4">
 								<li>
 									Create a free account at{" "}
 									<a
@@ -106,10 +106,7 @@ export function ConnectSupabaseSteps() {
 										.env
 									</code>{" "}
 									file, copy the <span className="text-gray-200">API URL</span>{" "}
-									into{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										VITE_SUPABASE_URL
-									</code>
+									into <CopyableCode>VITE_SUPABASE_URL</CopyableCode>
 								</li>
 								<li>
 									In your{" "}
@@ -118,9 +115,7 @@ export function ConnectSupabaseSteps() {
 									</code>{" "}
 									file, uncomment and paste the{" "}
 									<span className="text-gray-200">anon public</span> key into{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										VITE_SUPABASE_ANON_KEY
-									</code>
+									<CopyableCode>VITE_SUPABASE_ANON_KEY</CopyableCode>
 								</li>
 								<li>
 									In your{" "}
@@ -129,10 +124,7 @@ export function ConnectSupabaseSteps() {
 									</code>{" "}
 									file, uncomment and paste the{" "}
 									<span className="text-gray-200">service_role secret</span> key
-									into{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										SUPABASE_SECRET_KEY
-									</code>
+									into <CopyableCode>SUPABASE_SECRET_KEY</CopyableCode>
 								</li>
 							</ol>
 						</div>
@@ -152,13 +144,19 @@ export function ConnectSupabaseSteps() {
 					autoChecked={isLocalReachable}
 					description={
 						<div className="space-y-3 pt-1">
-							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
+							<ol className="space-y-1.5 text-sm text-gray-400 list-[lower-alpha] list-inside ml-4">
 								<li>
 									Run{" "}
 									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
 										npm run db:start
 									</code>{" "}
-									to start a local Supabase instance
+									to start a local Supabase instance — this will run migrations
+									that create a{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										profiles
+									</code>{" "}
+									table with Row Level Security policies and an auto-create
+									trigger on sign-up
 								</li>
 								<li>
 									Run{" "}
@@ -172,10 +170,7 @@ export function ConnectSupabaseSteps() {
 									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
 										.env.local
 									</code>{" "}
-									file, uncomment{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										VITE_SUPABASE_URL
-									</code>
+									file, uncomment <CopyableCode>VITE_SUPABASE_URL</CopyableCode>
 								</li>
 								<li>
 									In your{" "}
@@ -184,9 +179,7 @@ export function ConnectSupabaseSteps() {
 									</code>{" "}
 									file, uncomment and paste the{" "}
 									<span className="text-gray-200">anon key</span> into{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										VITE_SUPABASE_ANON_KEY
-									</code>
+									<CopyableCode>VITE_SUPABASE_ANON_KEY</CopyableCode>
 								</li>
 								<li>
 									In your{" "}
@@ -195,9 +188,7 @@ export function ConnectSupabaseSteps() {
 									</code>{" "}
 									file, uncomment and paste the{" "}
 									<span className="text-gray-200">service_role key</span> into{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										SUPABASE_SECRET_KEY
-									</code>
+									<CopyableCode>SUPABASE_SECRET_KEY</CopyableCode>
 								</li>
 							</ol>
 						</div>
