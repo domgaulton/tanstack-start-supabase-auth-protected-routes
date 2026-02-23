@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { hasEnvVars } from "@/utils/env";
-import { supabase } from "@/utils/supabase";
 
 export { hasEnvVars };
 
@@ -17,9 +16,14 @@ export function useSetupStatus() {
 			return;
 		}
 
-		supabase.auth
-			.getSession()
-			.then(() => setIsSupabaseReachable(true))
+		// Hit the auth settings endpoint to verify the Supabase instance is
+		// reachable and the anon key is accepted (getSession is local-only).
+		fetch(`${import.meta.env.VITE_SUPABASE_URL}/auth/v1/settings`, {
+			headers: {
+				apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+			},
+		})
+			.then((res) => setIsSupabaseReachable(res.ok))
 			.catch(() => setIsSupabaseReachable(false));
 	}, []);
 

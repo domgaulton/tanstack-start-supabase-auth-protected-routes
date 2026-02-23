@@ -65,6 +65,10 @@ npm run test             # Vitest unit tests
 - `VITE_SUPABASE_ANON_KEY` — Public anon key (safe for client)
 - `SUPABASE_SECRET_KEY` — Server-side only (seeding, admin operations)
 
+**File convention** (both gitignored, only `.env.example` is committed):
+- `.env` — Hosted/production Supabase credentials
+- `.env.local` — Local development overrides (takes precedence over `.env`)
+
 ## Test Users (local dev)
 
 - `user-a@example.com` / `password123` (Alice)
