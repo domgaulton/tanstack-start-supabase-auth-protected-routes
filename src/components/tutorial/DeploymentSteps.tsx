@@ -1,12 +1,9 @@
 import { Check, ChevronRight, Copy } from "lucide-react";
 import { useCallback, useState } from "react";
-import { TutorialStep } from "./TutorialStep";
+import { CopyableCode, TutorialStep } from "./TutorialStep";
 
-const GH_SECRET_CMD =
-	"gh secret set SUPABASE_ACCESS_TOKEN --body \"$(grep '^SUPABASE_ACCESS_TOKEN=' .env | cut -d= -f2-)\" && gh secret set SUPABASE_PROJECT_REF --body \"$(grep '^SUPABASE_PROJECT_REF=' .env | cut -d= -f2-)\"";
-
-const GH_VERCEL_CMD =
-	"gh secret set VERCEL_TOKEN --body \"$(grep '^VERCEL_TOKEN=' .env | cut -d= -f2-)\"";
+const GH_SECRETS_CMD =
+	"gh secret set SUPABASE_ACCESS_TOKEN --body \"$(grep '^SUPABASE_ACCESS_TOKEN=' .env | cut -d= -f2-)\" && gh secret set SUPABASE_PROJECT_REF --body \"$(grep '^SUPABASE_PROJECT_REF=' .env | cut -d= -f2-)\" && gh secret set VERCEL_TOKEN --body \"$(grep '^VERCEL_TOKEN=' .env | cut -d= -f2-)\"";
 
 function CopyBlock({ text }: { text: string }) {
 	const [copied, setCopied] = useState(false);
@@ -44,7 +41,9 @@ export function DeploymentSteps() {
 		<details className="group">
 			<summary className="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center gap-2">
 				<ChevronRight className="size-5 text-gray-400 transition-transform group-open:rotate-90" />
-				<h2 className="text-xl font-semibold text-white">Set up deployment</h2>
+				<h2 className="text-xl font-semibold text-white">
+					Set up for CI/CD deployments
+				</h2>
 			</summary>
 			<p className="mt-4 text-sm text-gray-300">
 				Configure GitHub Actions to automatically deploy database migrations and
@@ -59,7 +58,7 @@ export function DeploymentSteps() {
 					title="1. Get your Supabase access token"
 					description={
 						<div className="space-y-3 pt-1">
-							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
+							<ol className="space-y-1.5 text-sm text-gray-400 list-[lower-alpha] list-inside ml-4">
 								<li>
 									Go to{" "}
 									<a
@@ -72,6 +71,14 @@ export function DeploymentSteps() {
 									</a>
 								</li>
 								<li>Generate a new token and copy it</li>
+								<li>
+									Uncomment and paste your access token into{" "}
+									<CopyableCode>SUPABASE_ACCESS_TOKEN</CopyableCode> in your{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										.env
+									</code>{" "}
+									file
+								</li>
 							</ol>
 						</div>
 					}
@@ -81,7 +88,7 @@ export function DeploymentSteps() {
 					title="2. Get your Supabase project ref"
 					description={
 						<div className="space-y-3 pt-1">
-							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
+							<ol className="space-y-1.5 text-sm text-gray-400 list-[lower-alpha] list-inside ml-4">
 								<li>
 									Go to{" "}
 									<a
@@ -96,35 +103,13 @@ export function DeploymentSteps() {
 								<li>
 									Copy the <span className="text-gray-200">Reference ID</span>
 								</li>
-							</ol>
-						</div>
-					}
-				/>
-
-				<TutorialStep
-					title={
-						<span>
-							3. Add the values to your{" "}
-							<code className="bg-slate-700 px-1.5 py-0.5 rounded text-sm text-gray-200">
-								.env
-							</code>{" "}
-							file
-						</span>
-					}
-					description={
-						<div className="space-y-3 pt-1">
-							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
-								<li>
-									Uncomment and paste your access token into{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										SUPABASE_ACCESS_TOKEN
-									</code>
-								</li>
 								<li>
 									Uncomment and paste your reference ID into{" "}
+									<CopyableCode>SUPABASE_PROJECT_REF</CopyableCode> in your{" "}
 									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										SUPABASE_PROJECT_REF
-									</code>
+										.env
+									</code>{" "}
+									file
 								</li>
 							</ol>
 						</div>
@@ -132,55 +117,10 @@ export function DeploymentSteps() {
 				/>
 
 				<TutorialStep
-					title="4. Push secrets to GitHub"
+					title="3. (Optional) Get your Vercel token"
 					description={
 						<div className="space-y-3 pt-1">
-							<p className="text-sm text-gray-400">
-								Using the{" "}
-								<a
-									href="https://cli.github.com/"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300"
-								>
-									GitHub CLI
-								</a>
-								, push the secrets from your{" "}
-								<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-									.env
-								</code>{" "}
-								file:
-							</p>
-							<CopyBlock text={GH_SECRET_CMD} />
-							<p className="text-xs text-gray-500">
-								Requires the{" "}
-								<a
-									href="https://cli.github.com/"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="text-gray-400 underline underline-offset-2 hover:text-gray-300"
-								>
-									GitHub CLI
-								</a>
-								. If you get a 403 error, run{" "}
-								<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-500">
-									gh auth refresh -s admin:org
-								</code>{" "}
-								to grant the secrets permission. Or add them manually in your
-								repo &gt;{" "}
-								<span className="text-gray-400">
-									Settings &gt; Secrets and variables &gt; Actions
-								</span>
-							</p>
-						</div>
-					}
-				/>
-
-				<TutorialStep
-					title="5. (Optional) Add Vercel secret for app deployment"
-					description={
-						<div className="space-y-3 pt-1">
-							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
+							<ol className="space-y-1.5 text-sm text-gray-400 list-[lower-alpha] list-inside ml-4">
 								<li>
 									Import your repo in the{" "}
 									<a
@@ -207,21 +147,60 @@ export function DeploymentSteps() {
 								</li>
 								<li>
 									Uncomment and paste the token into{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										VERCEL_TOKEN
-									</code>{" "}
-									in your{" "}
+									<CopyableCode>VERCEL_TOKEN</CopyableCode> in your{" "}
 									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
 										.env
 									</code>{" "}
-									file, then run:
+									file
 								</li>
 							</ol>
-							<CopyBlock text={GH_VERCEL_CMD} />
 							<p className="text-xs text-gray-500">
 								The deploy workflow auto-detects the Vercel project from the
 								GitHub repo connection.
 							</p>
+						</div>
+					}
+				/>
+
+				<TutorialStep
+					title="4. Push all secrets to GitHub"
+					description={
+						<div className="space-y-3 pt-1">
+							<div className="bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-sm text-gray-300">
+								<p>
+									Requires the{" "}
+									<a
+										href="https://cli.github.com/"
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300"
+									>
+										GitHub CLI
+									</a>
+									. If you get a 403 error, run the following to grant the
+									secrets permission:
+								</p>
+								<p className="mt-1">
+									<CopyableCode>gh auth refresh -s admin:org</CopyableCode>
+								</p>
+								<p className="mt-2 text-gray-400">
+									Or add them manually in your repo &gt;{" "}
+									<span className="text-gray-200">
+										Settings &gt; Secrets and variables &gt; Actions
+									</span>
+								</p>
+							</div>
+							<ol className="space-y-1.5 text-sm text-gray-400 list-[lower-alpha] list-inside ml-4">
+								<li>
+									Run the following command in your terminal to push all secrets
+									from your{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										.env
+									</code>{" "}
+									file
+								</li>
+							</ol>
+							<CopyBlock text={GH_SECRETS_CMD} />
 						</div>
 					}
 				/>
