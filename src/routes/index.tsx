@@ -1,22 +1,17 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lock, Palette, Zap } from "lucide-react";
+import { ConnectSupabaseSteps } from "@/components/tutorial/ConnectSupabaseSteps";
+import { SignUpUserSteps } from "@/components/tutorial/SignUpUserSteps";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/utils/supabase";
+import { useSetupStatus } from "@/hooks/useSetupStatus";
 
 export const Route = createFileRoute("/")({
-	async beforeLoad() {
-		const {
-			data: { session },
-		} = await supabase.auth.getSession();
-
-		if (session) {
-			throw redirect({ to: "/dashboard" });
-		}
-	},
 	component: HomePage,
 });
 
 function HomePage() {
+	const { isSupabaseReachable } = useSetupStatus();
+
 	const features = [
 		{
 			icon: <Lock className="w-10 h-10 text-cyan-400" />,
@@ -60,6 +55,17 @@ function HomePage() {
 						</Button>
 					</div>
 				</div>
+			</section>
+
+			<section className="py-12 px-6 max-w-3xl mx-auto space-y-6">
+				<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
+					<ConnectSupabaseSteps />
+				</div>
+				{isSupabaseReachable === true && (
+					<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
+						<SignUpUserSteps />
+					</div>
+				)}
 			</section>
 
 			<section className="py-16 px-6 max-w-5xl mx-auto">

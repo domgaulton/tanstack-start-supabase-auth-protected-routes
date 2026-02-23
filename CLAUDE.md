@@ -27,7 +27,9 @@ This has been inspired by the NextJs with Supabase example documentation and gui
   - `forgot-password.tsx` / `reset-password.tsx` — Password reset flow
 - `src/context/AuthContext.tsx` — React context providing `session`, `user`, `isLoading` via `useAuth()` hook
 - `src/utils/supabase.ts` — Supabase client singleton
-- `src/components/ui/` — shadcn/ui components (button, card, input, label, alert, dialog)
+- `src/components/ui/` — shadcn/ui components (button, card, input, label, alert, dialog, checkbox)
+- `src/components/tutorial/` — Onboarding tutorial components (TutorialStep, ConnectSupabaseSteps, SignUpUserSteps)
+- `src/hooks/useSetupStatus.ts` — Hook that detects setup progress (env vars, Supabase reachability, user sign-up)
 - `src/types/database.types.ts` — Auto-generated Supabase schema types
 - `supabase/migrations/` — SQL migrations (profiles table, RLS policies, triggers)
 - `supabase/seed.ts` — Test user seeding
@@ -55,12 +57,18 @@ npm run test             # Vitest unit tests
 - **Profiles table** is auto-created on signup via a PostgreSQL trigger (`handle_new_user`)
 - **RLS policies** ensure users can only read/update their own profile
 - **Path alias**: `@/*` maps to `src/*`
+- **Homepage tutorial** shows auto-checking checklists that detect setup progress (env vars → Supabase connection → user sign-up). The homepage is always accessible (no auth redirect) for SEO and onboarding
 
 ## Environment Variables
 
 - `VITE_SUPABASE_URL` — Supabase API URL
 - `VITE_SUPABASE_ANON_KEY` — Public anon key (safe for client)
 - `SUPABASE_SECRET_KEY` — Server-side only (seeding, admin operations)
+
+**File convention** (gitignored; `.env.example` and `.env.local.example` are committed):
+
+- `.env` — Hosted/production Supabase credentials (from `.env.example`)
+- `.env.local` — Local development overrides, takes precedence over `.env` (from `.env.local.example`)
 
 ## Test Users (local dev)
 
@@ -71,3 +79,9 @@ npm run test             # Vitest unit tests
 ## Updates made by Claude
 
 - Please ensure documentation found in the repo is also updated alongside changes before processing to commiting or pushing features.
+
+Allow claude to run the following commands;
+
+- npm run typecheck
+- npm run check
+- npm run lint

@@ -25,10 +25,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		supabase.auth.getSession().then(({ data: { session } }) => {
-			setSession(session);
-			setIsLoading(false);
-		});
+		supabase.auth
+			.getSession()
+			.then(({ data: { session } }) => {
+				setSession(session);
+				setIsLoading(false);
+			})
+			.catch(() => {
+				setIsLoading(false);
+			});
 
 		const {
 			data: { subscription },

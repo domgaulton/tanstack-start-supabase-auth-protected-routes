@@ -39,11 +39,13 @@ npm run db:start
 
 ### Environment Variables
 
-Copy the template and fill in your local Supabase keys:
+Copy the templates:
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env && cp .env.local.example .env.local
 ```
+
+Fill in your Supabase keys (`.env` for hosted, `.env.local` for local dev).
 
 Get the values from Supabase:
 
