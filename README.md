@@ -8,6 +8,8 @@
 
 A starter template demonstrating **TanStack Start** with **Supabase Auth**, protected routes, and **shadcn/ui**.
 
+[![Live Demo](public/og-image.svg)](https://tanstack-start-supabase.vercel.app/)
+
 **[Live Demo](https://tanstack-start-supabase.vercel.app/)**
 
 ## What's Included
