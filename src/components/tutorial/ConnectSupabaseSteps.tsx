@@ -146,12 +146,9 @@ export function ConnectSupabaseSteps() {
 						<div className="space-y-3 pt-1">
 							<ol className="space-y-1.5 text-sm text-gray-400 list-[lower-alpha] list-inside ml-4">
 								<li>
-									Run{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										npm run db:start
-									</code>{" "}
-									to start a local Supabase instance — this will run migrations
-									that create a{" "}
+									Run <CopyableCode>npm run db:start</CopyableCode> to start a
+									local Supabase instance — this will run migrations that create
+									a{" "}
 									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
 										profiles
 									</code>{" "}
@@ -159,11 +156,8 @@ export function ConnectSupabaseSteps() {
 									trigger on sign-up
 								</li>
 								<li>
-									Run{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										npx supabase status
-									</code>{" "}
-									to print your local credentials
+									Run <CopyableCode>npx supabase status</CopyableCode> to print
+									your local credentials
 								</li>
 								<li>
 									In your{" "}
