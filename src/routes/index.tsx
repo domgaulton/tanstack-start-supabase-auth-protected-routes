@@ -1,18 +1,11 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lock, Palette, Zap } from "lucide-react";
+import { ConnectSupabaseSteps } from "@/components/tutorial/ConnectSupabaseSteps";
+import { SignUpUserSteps } from "@/components/tutorial/SignUpUserSteps";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/utils/supabase";
+import { hasEnvVars } from "@/utils/env";
 
 export const Route = createFileRoute("/")({
-	async beforeLoad() {
-		const {
-			data: { session },
-		} = await supabase.auth.getSession();
-
-		if (session) {
-			throw redirect({ to: "/dashboard" });
-		}
-	},
 	component: HomePage,
 });
 
@@ -59,6 +52,12 @@ function HomePage() {
 							<Link to="/login">Get Started</Link>
 						</Button>
 					</div>
+				</div>
+			</section>
+
+			<section className="py-12 px-6 max-w-2xl mx-auto">
+				<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
+					{hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
 				</div>
 			</section>
 
