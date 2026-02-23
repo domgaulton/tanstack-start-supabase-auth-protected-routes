@@ -1,5 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ExternalLink, Github, Lock, Palette, Zap } from "lucide-react";
+import {
+	ExternalLink,
+	Github,
+	Lock,
+	Palette,
+	Rocket,
+	Shield,
+	Zap,
+} from "lucide-react";
 import { ConnectSupabaseSteps } from "@/components/tutorial/ConnectSupabaseSteps";
 import { DeploymentSteps } from "@/components/tutorial/DeploymentSteps";
 import { SignUpUserSteps } from "@/components/tutorial/SignUpUserSteps";
@@ -44,6 +52,24 @@ function HomePage() {
 			title: "shadcn/ui",
 			description:
 				"Beautiful, accessible components built with Radix UI and Tailwind CSS. Ready to customize.",
+		},
+		{
+			icon: <Shield className="w-10 h-10 text-green-400" />,
+			title: "Protected Routes",
+			description:
+				"Auth guard layout with automatic redirects. Uses TanStack Router's beforeLoad hook for server-side checks.",
+		},
+		{
+			icon: <Github className="w-10 h-10 text-gray-300" />,
+			title: "GitHub Actions CI/CD",
+			description:
+				"Automated pipeline with type checking, linting, and tests on every PR. Vercel deployment included.",
+		},
+		{
+			icon: <Rocket className="w-10 h-10 text-red-400" />,
+			title: "Production Ready",
+			description:
+				"Biome linting, Vitest testing, Husky pre-commit hooks, and Vercel deployment config out of the box.",
 		},
 	];
 
@@ -98,7 +124,7 @@ function HomePage() {
 					</div>
 					<div className="pt-4 flex items-center justify-center gap-3">
 						<Button size="lg" asChild>
-							<Link to="/login">Get Started</Link>
+							<Link to="/dashboard">Dashboard</Link>
 						</Button>
 						<Button size="lg" variant="outline" asChild>
 							<a
@@ -132,12 +158,20 @@ function HomePage() {
 						<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-400">
 							src/components/tutorial/
 						</code>{" "}
-						folder and remove these steps from your homepage.
+						folder and remove these steps from your homepage. The{" "}
+						<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-400">
+							/about
+						</code>{" "}
+						and{" "}
+						<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-400">
+							/features
+						</code>{" "}
+						pages can also be updated or removed to suit your project.
 					</p>
 				</section>
 			)}
 
-			<section className="py-16 px-6 max-w-5xl mx-auto">
+			<section className="py-16 px-6 max-w-5xl mx-auto space-y-6">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 					{features.map((feature) => (
 						<div
@@ -153,6 +187,15 @@ function HomePage() {
 							</p>
 						</div>
 					))}
+				</div>
+				<div className="text-center">
+					<Link
+						to="/features"
+						className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
+					>
+						See all features in detail
+						<ExternalLink className="w-4 h-4" />
+					</Link>
 				</div>
 			</section>
 
@@ -282,13 +325,32 @@ function HomePage() {
 									</td>
 									<td className="py-3">Set a new password (via email link)</td>
 								</tr>
+								<tr className="border-b border-slate-700/50">
+									<td className="py-3 pr-4">
+										<code className="bg-slate-900 rounded px-2 py-1 text-sm font-mono text-cyan-400">
+											/about
+										</code>
+									</td>
+									<td className="py-3">About this project</td>
+								</tr>
+								<tr className="border-b border-slate-700/50">
+									<td className="py-3 pr-4">
+										<code className="bg-slate-900 rounded px-2 py-1 text-sm font-mono text-cyan-400">
+											/features
+										</code>
+									</td>
+									<td className="py-3">Features overview</td>
+								</tr>
 								<tr>
 									<td className="py-3 pr-4">
 										<code className="bg-slate-900 rounded px-2 py-1 text-sm font-mono text-cyan-400">
 											/dashboard
 										</code>
 									</td>
-									<td className="py-3">Protected — requires authentication</td>
+									<td className="py-3">
+										Protected — requires authentication otherwise redirects to
+										/login
+									</td>
 								</tr>
 							</tbody>
 						</table>

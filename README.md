@@ -89,14 +89,16 @@ The app runs at [http://127.0.0.1:3000](http://127.0.0.1:3000).
 
 ## Routes
 
-| Route              | Description                                               |
-| ------------------ | --------------------------------------------------------- |
-| `/`                | Landing page (redirects to `/dashboard` if authenticated) |
-| `/login`           | Sign in / sign up                                         |
-| `/logout`          | Signs out and redirects to `/`                            |
-| `/forgot-password` | Request a password reset email                            |
-| `/reset-password`  | Set a new password (via email link)                       |
-| `/dashboard`       | Protected — requires authentication                       |
+| Route              | Description                                                       |
+| ------------------ | ----------------------------------------------------------------- |
+| `/`                | Landing page                                                      |
+| `/about`           | About this project                                                |
+| `/features`        | Features overview                                                 |
+| `/login`           | Sign in / sign up                                                 |
+| `/logout`          | Signs out and redirects to `/`                                    |
+| `/forgot-password` | Request a password reset email                                    |
+| `/reset-password`  | Set a new password (via email link)                               |
+| `/dashboard`       | Protected — requires authentication otherwise redirects to /login |
 
 ### Local Email Testing
 

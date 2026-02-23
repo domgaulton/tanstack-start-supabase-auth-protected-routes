@@ -1,5 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { Home, LayoutDashboard, LogIn, LogOut, Menu, X } from "lucide-react";
+import {
+	Home,
+	Info,
+	LayoutDashboard,
+	LogIn,
+	LogOut,
+	Menu,
+	Sparkles,
+	X,
+} from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -9,7 +18,7 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
+			<header className="p-4 flex items-center gap-1 bg-gray-800 text-white shadow-lg">
 				<button
 					type="button"
 					onClick={() => setIsOpen(true)}
@@ -18,14 +27,13 @@ export default function Header() {
 				>
 					<Menu size={24} />
 				</button>
-				<h1 className="ml-4 text-xl font-bold">
-					<Link
-						to={user ? "/dashboard" : "/"}
-						className="text-white hover:text-gray-300 transition-colors"
-					>
-						Home
-					</Link>
-				</h1>
+				<Link
+					to="/"
+					className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+					aria-label="Home"
+				>
+					<Home size={24} />
+				</Link>
 			</header>
 
 			{/* Overlay */}
@@ -71,6 +79,30 @@ export default function Header() {
 								<span className="font-medium">Home</span>
 							</Link>
 							<Link
+								to="/about"
+								onClick={() => setIsOpen(false)}
+								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+								activeProps={{
+									className:
+										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
+								}}
+							>
+								<Info size={20} />
+								<span className="font-medium">About</span>
+							</Link>
+							<Link
+								to="/features"
+								onClick={() => setIsOpen(false)}
+								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+								activeProps={{
+									className:
+										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
+								}}
+							>
+								<Sparkles size={20} />
+								<span className="font-medium">Features</span>
+							</Link>
+							<Link
 								to="/login"
 								onClick={() => setIsOpen(false)}
 								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
@@ -87,6 +119,30 @@ export default function Header() {
 
 					{!isLoading && user && (
 						<>
+							<Link
+								to="/about"
+								onClick={() => setIsOpen(false)}
+								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+								activeProps={{
+									className:
+										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
+								}}
+							>
+								<Info size={20} />
+								<span className="font-medium">About</span>
+							</Link>
+							<Link
+								to="/features"
+								onClick={() => setIsOpen(false)}
+								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+								activeProps={{
+									className:
+										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
+								}}
+							>
+								<Sparkles size={20} />
+								<span className="font-medium">Features</span>
+							</Link>
 							<Link
 								to="/dashboard"
 								onClick={() => setIsOpen(false)}
