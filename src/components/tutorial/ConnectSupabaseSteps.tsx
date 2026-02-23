@@ -1,21 +1,14 @@
 import { Check, ChevronRight, Copy } from "lucide-react";
-import { useCallback, useState } from "react";
 import { CopyableCode, TutorialStep } from "@/components/tutorial/TutorialStep";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { useSetupStatus } from "@/hooks/useSetupStatus";
 import { hasEnvFiles } from "@/utils/env";
 
 const COPY_CMD = "cp .env.example .env && cp .env.local.example .env.local";
 
 export function ConnectSupabaseSteps() {
-	const [copied, setCopied] = useState(false);
+	const { copied, copy: handleCopy } = useCopyToClipboard(COPY_CMD);
 	const { isHostedReachable, isLocalReachable } = useSetupStatus();
-
-	const handleCopy = useCallback(() => {
-		navigator.clipboard.writeText(COPY_CMD).then(() => {
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		});
-	}, []);
 
 	return (
 		<details open className="group">
