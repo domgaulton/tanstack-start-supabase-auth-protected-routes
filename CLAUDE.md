@@ -23,6 +23,8 @@ This has been inspired by the NextJs with Supabase example documentation and gui
   - `__root.tsx` — Root layout (AuthProvider, Header)
   - `_authenticated.tsx` — Route guard layout (redirects to `/login` if unauthenticated)
   - `_authenticated/dashboard.tsx` — Protected dashboard page
+  - `about.tsx` — Public about page with project info and links
+  - `features.tsx` — Public features overview with detailed feature grid
   - `login.tsx` — Combined login/signup form
   - `forgot-password.tsx` / `reset-password.tsx` — Password reset flow
 - `src/context/AuthContext.tsx` — React context providing `session`, `user`, `isLoading` via `useAuth()` hook
