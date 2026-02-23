@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lock, Palette, Zap } from "lucide-react";
 import { ConnectSupabaseSteps } from "@/components/tutorial/ConnectSupabaseSteps";
+import { DeploymentSteps } from "@/components/tutorial/DeploymentSteps";
 import { SignUpUserSteps } from "@/components/tutorial/SignUpUserSteps";
 import { Button } from "@/components/ui/button";
 import { useSetupStatus } from "@/hooks/useSetupStatus";
@@ -66,6 +67,9 @@ function HomePage() {
 						<SignUpUserSteps />
 					</div>
 				)}
+				<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
+					<DeploymentSteps />
+				</div>
 			</section>
 
 			<section className="py-16 px-6 max-w-5xl mx-auto">
