@@ -15,12 +15,13 @@ This has been inspired by the NextJs with Supabase example documentation and gui
 - **Auth & DB**: Supabase (email/password auth, PostgreSQL, RLS)
 - **Styling**: Tailwind CSS v4, shadcn/ui (Radix primitives), Lucide icons
 - **Code Quality**: Biome (lint/format), TypeScript (strict), Vitest
+- **Analytics**: Vercel Analytics (automatic page view tracking)
 - **Deployment**: Vercel via GitHub Actions CI/CD
 
 ## Project Structure
 
 - `src/routes/` — File-based routing (TanStack Router)
-  - `__root.tsx` — Root layout (AuthProvider, Header)
+  - `__root.tsx` — Root layout (AuthProvider, Header, Vercel Analytics)
   - `_authenticated.tsx` — Route guard layout (redirects to `/login` if unauthenticated)
   - `_authenticated/dashboard.tsx` — Protected dashboard page
   - `about.tsx` — Public about page with project info and links

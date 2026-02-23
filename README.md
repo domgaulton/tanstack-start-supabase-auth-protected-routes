@@ -22,6 +22,7 @@ A starter template demonstrating **TanStack Start** with **Supabase Auth**, prot
 - **Biome** — Linting and formatting
 - **Vitest** — Testing framework
 - **CI/CD** — GitHub Actions for checks and deployment
+- **Vercel Analytics** — Automatic page view tracking in production
 - **Husky** — Pre-commit hooks
 
 ## Prerequisites
@@ -147,7 +148,7 @@ Configured for Vercel deployment. Set the `VERCEL_*` environment variables and p
 
 | File                                      | Purpose                                      |
 | ----------------------------------------- | -------------------------------------------- |
-| `src/routes/__root.tsx`                   | Root layout with `AuthProvider` and `Header` |
+| `src/routes/__root.tsx`                   | Root layout with `AuthProvider`, `Header`, and Vercel Analytics |
 | `src/routes/_authenticated.tsx`           | Auth guard layout for protected routes       |
 | `src/routes/_authenticated/dashboard.tsx` | Example protected page                       |
 | `src/context/AuthContext.tsx`             | React context for auth state                 |
