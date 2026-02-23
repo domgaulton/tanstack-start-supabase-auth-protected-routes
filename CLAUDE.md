@@ -66,6 +66,7 @@ npm run test             # Vitest unit tests
 - `SUPABASE_SECRET_KEY` — Server-side only (seeding, admin operations)
 
 **File convention** (both gitignored, only `.env.example` is committed):
+
 - `.env` — Hosted/production Supabase credentials
 - `.env.local` — Local development overrides (takes precedence over `.env`)
 
@@ -78,3 +79,9 @@ npm run test             # Vitest unit tests
 ## Updates made by Claude
 
 - Please ensure documentation found in the repo is also updated alongside changes before processing to commiting or pushing features.
+
+Allow claude to run the following commands;
+
+- npm run typecheck
+- npm run check
+- npm run lint

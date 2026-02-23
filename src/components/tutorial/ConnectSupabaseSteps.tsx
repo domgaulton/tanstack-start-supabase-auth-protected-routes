@@ -1,12 +1,14 @@
 import { Check, Copy } from "lucide-react";
 import { useCallback, useState } from "react";
 import { TutorialStep } from "@/components/tutorial/TutorialStep";
+import { useSetupStatus } from "@/hooks/useSetupStatus";
 import { hasEnvFiles } from "@/utils/env";
 
 const COPY_CMD = "cp .env.example .env && cp .env.example .env.local";
 
 export function ConnectSupabaseSteps() {
 	const [copied, setCopied] = useState(false);
+	const { isSupabaseReachable } = useSetupStatus();
 
 	const handleCopy = useCallback(() => {
 		navigator.clipboard.writeText(COPY_CMD).then(() => {
@@ -62,121 +64,151 @@ export function ConnectSupabaseSteps() {
 				<TutorialStep
 					title={
 						<span>
-							2. Create a Supabase project and update your{" "}
+							2. Create a hosted Supabase project and update your{" "}
 							<code className="bg-slate-700 px-1.5 py-0.5 rounded text-sm text-gray-200">
 								.env
 							</code>{" "}
 							file
 						</span>
 					}
+					autoChecked={isSupabaseReachable === true}
 					description={
 						<div className="space-y-3 pt-1">
-							<div className="rounded-lg border border-slate-700 bg-slate-900 p-4 space-y-3">
-								<p className="text-sm font-medium text-cyan-400">
+							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
+								<li>
+									Create a free account at{" "}
 									<a
 										href="https://database.new"
 										target="_blank"
 										rel="noopener noreferrer"
-										className="underline underline-offset-2 hover:text-cyan-300"
+										className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300"
 									>
-										Hosted Supabase
+										database.new
 									</a>
-								</p>
-								<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
-									<li>
-										Create a free account at{" "}
-										<a
-											href="https://database.new"
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300"
-										>
-											database.new
-										</a>
-									</li>
-									<li>
-										Once your project is ready, go to{" "}
-										<a
-											href="https://supabase.com/dashboard/project/_/settings/api"
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300"
-										>
-											Project Settings &gt; API
-										</a>
-									</li>
-									<li>
-										In your{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											.env
-										</code>{" "}
-										file, copy the{" "}
-										<span className="text-gray-200">API URL</span> into{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											VITE_SUPABASE_URL
-										</code>
-									</li>
-									<li>
-										In your{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											.env
-										</code>{" "}
-										file, copy the{" "}
-										<span className="text-gray-200">anon public</span> key into{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											VITE_SUPABASE_ANON_KEY
-										</code>
-									</li>
-									<li>
-										In your{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											.env
-										</code>{" "}
-										file, copy the{" "}
-										<span className="text-gray-200">service_role secret</span>{" "}
-										key into{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											SUPABASE_SECRET_KEY
-										</code>
-									</li>
-								</ol>
-							</div>
-							<div className="rounded-lg border border-slate-700 bg-slate-900 p-4 space-y-3">
-								<p className="text-sm font-medium text-gray-200">
-									Local development
-								</p>
-								<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
-									<li>
-										Run{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											npm run db:start
-										</code>{" "}
-										to start a local Supabase instance
-									</li>
-									<li>
-										Run{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											npx supabase status
-										</code>{" "}
-										to print your local API keys
-									</li>
-									<li>
-										Paste the <span className="text-gray-200">API URL</span>,{" "}
-										<span className="text-gray-200">anon key</span>, and{" "}
-										<span className="text-gray-200">service_role key</span> into
-										your{" "}
-										<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-											.env
-										</code>{" "}
-										file
-									</li>
-								</ol>
-							</div>
+								</li>
+								<li>
+									Once your project is ready, go to{" "}
+									<a
+										href="https://supabase.com/dashboard/project/_/settings/api"
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300"
+									>
+										Project Settings &gt; API
+									</a>
+								</li>
+								<li>
+									In your{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										.env
+									</code>{" "}
+									file, copy the <span className="text-gray-200">API URL</span>{" "}
+									into{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										VITE_SUPABASE_URL
+									</code>
+								</li>
+								<li>
+									In your{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										.env
+									</code>{" "}
+									file, uncomment and paste the{" "}
+									<span className="text-gray-200">anon public</span> key into{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										VITE_SUPABASE_ANON_KEY
+									</code>
+								</li>
+								<li>
+									In your{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										.env
+									</code>{" "}
+									file, uncomment and paste the{" "}
+									<span className="text-gray-200">service_role secret</span> key
+									into{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										SUPABASE_SECRET_KEY
+									</code>
+								</li>
+							</ol>
 						</div>
 					}
 				/>
 
-				<TutorialStep title="3. Restart the dev server and refresh this page" />
+				<TutorialStep
+					title={
+						<span>
+							3. Set up local development and update your{" "}
+							<code className="bg-slate-700 px-1.5 py-0.5 rounded text-sm text-gray-200">
+								.env.local
+							</code>{" "}
+							file
+						</span>
+					}
+					autoChecked={isSupabaseReachable === true}
+					description={
+						<div className="space-y-3 pt-1">
+							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
+								<li>
+									Run{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										npm run db:start
+									</code>{" "}
+									to start a local Supabase instance
+								</li>
+								<li>
+									Run{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										npx supabase status
+									</code>{" "}
+									to print your local credentials
+								</li>
+								<li>
+									In your{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										.env.local
+									</code>{" "}
+									file, set{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										VITE_SUPABASE_URL
+									</code>{" "}
+									to{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										http://127.0.0.1:54321
+									</code>
+								</li>
+								<li>
+									In your{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										.env.local
+									</code>{" "}
+									file, uncomment and paste the{" "}
+									<span className="text-gray-200">anon key</span> into{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										VITE_SUPABASE_ANON_KEY
+									</code>
+								</li>
+								<li>
+									In your{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										.env.local
+									</code>{" "}
+									file, uncomment and paste the{" "}
+									<span className="text-gray-200">service_role key</span> into{" "}
+									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
+										SUPABASE_SECRET_KEY
+									</code>
+								</li>
+							</ol>
+						</div>
+					}
+				/>
+
+				<TutorialStep
+					title="4. Restart the dev server and refresh this page"
+					autoChecked={isSupabaseReachable === true}
+				/>
 			</ol>
 		</div>
 	);

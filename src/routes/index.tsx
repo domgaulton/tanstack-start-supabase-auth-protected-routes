@@ -3,13 +3,15 @@ import { Lock, Palette, Zap } from "lucide-react";
 import { ConnectSupabaseSteps } from "@/components/tutorial/ConnectSupabaseSteps";
 import { SignUpUserSteps } from "@/components/tutorial/SignUpUserSteps";
 import { Button } from "@/components/ui/button";
-import { hasEnvVars } from "@/utils/env";
+import { useSetupStatus } from "@/hooks/useSetupStatus";
 
 export const Route = createFileRoute("/")({
 	component: HomePage,
 });
 
 function HomePage() {
+	const { isSupabaseReachable } = useSetupStatus();
+
 	const features = [
 		{
 			icon: <Lock className="w-10 h-10 text-cyan-400" />,
@@ -55,10 +57,15 @@ function HomePage() {
 				</div>
 			</section>
 
-			<section className="py-12 px-6 max-w-3xl mx-auto">
+			<section className="py-12 px-6 max-w-3xl mx-auto space-y-6">
 				<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
-					{hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
+					<ConnectSupabaseSteps />
 				</div>
+				{isSupabaseReachable === true && (
+					<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
+						<SignUpUserSteps />
+					</div>
+				)}
 			</section>
 
 			<section className="py-16 px-6 max-w-5xl mx-auto">

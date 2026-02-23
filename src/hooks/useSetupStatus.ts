@@ -16,8 +16,8 @@ export function useSetupStatus() {
 			return;
 		}
 
-		// Hit the auth settings endpoint to verify the Supabase instance is
-		// reachable and the anon key is accepted (getSession is local-only).
+		// Hit the auth settings endpoint to verify the active Supabase instance
+		// is reachable and the anon key is accepted (getSession is local-only).
 		fetch(`${import.meta.env.VITE_SUPABASE_URL}/auth/v1/settings`, {
 			headers: {
 				apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
