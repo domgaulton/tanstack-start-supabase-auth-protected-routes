@@ -55,7 +55,7 @@ function HomePage() {
 				</div>
 			</section>
 
-			<section className="py-12 px-6 max-w-2xl mx-auto">
+			<section className="py-12 px-6 max-w-3xl mx-auto">
 				<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
 					{hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
 				</div>
