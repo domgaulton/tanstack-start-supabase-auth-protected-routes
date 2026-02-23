@@ -1,14 +1,14 @@
-import { Check, Copy } from "lucide-react";
+import { Check, ChevronRight, Copy } from "lucide-react";
 import { useCallback, useState } from "react";
 import { TutorialStep } from "@/components/tutorial/TutorialStep";
 import { useSetupStatus } from "@/hooks/useSetupStatus";
 import { hasEnvFiles } from "@/utils/env";
 
-const COPY_CMD = "cp .env.example .env && cp .env.example .env.local";
+const COPY_CMD = "cp .env.example .env && cp .env.local.example .env.local";
 
 export function ConnectSupabaseSteps() {
 	const [copied, setCopied] = useState(false);
-	const { isSupabaseReachable } = useSetupStatus();
+	const { isHostedReachable, isLocalReachable } = useSetupStatus();
 
 	const handleCopy = useCallback(() => {
 		navigator.clipboard.writeText(COPY_CMD).then(() => {
@@ -18,18 +18,21 @@ export function ConnectSupabaseSteps() {
 	}, []);
 
 	return (
-		<div className="space-y-4">
-			<h2 className="text-xl font-semibold text-white">
-				Set up your environment
-			</h2>
+		<details open className="group">
+			<summary className="list-none [&::-webkit-details-marker]:hidden cursor-pointer flex items-center gap-2">
+				<ChevronRight className="size-5 text-gray-400 transition-transform group-open:rotate-90" />
+				<h2 className="text-xl font-semibold text-white">
+					Set up your environment
+				</h2>
+			</summary>
 
-			<ol className="space-y-6 list-none">
+			<ol className="mt-4 space-y-6 list-none">
 				<TutorialStep
 					title="1. Create your environment files"
 					autoChecked={hasEnvFiles}
 					description={
 						<div className="space-y-3 pt-1">
-							<div className="group relative">
+							<div className="relative">
 								<pre className="bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 pr-12 text-sm text-gray-300 overflow-x-auto">
 									<code>{COPY_CMD}</code>
 								</pre>
@@ -71,7 +74,7 @@ export function ConnectSupabaseSteps() {
 							file
 						</span>
 					}
-					autoChecked={isSupabaseReachable === true}
+					autoChecked={isHostedReachable}
 					description={
 						<div className="space-y-3 pt-1">
 							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
@@ -146,7 +149,7 @@ export function ConnectSupabaseSteps() {
 							file
 						</span>
 					}
-					autoChecked={isSupabaseReachable === true}
+					autoChecked={isLocalReachable}
 					description={
 						<div className="space-y-3 pt-1">
 							<ol className="space-y-1.5 text-sm text-gray-400 list-decimal list-inside">
@@ -169,13 +172,9 @@ export function ConnectSupabaseSteps() {
 									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
 										.env.local
 									</code>{" "}
-									file, set{" "}
+									file, uncomment{" "}
 									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
 										VITE_SUPABASE_URL
-									</code>{" "}
-									to{" "}
-									<code className="bg-slate-700 px-1 py-0.5 rounded text-gray-300">
-										http://127.0.0.1:54321
 									</code>
 								</li>
 								<li>
@@ -205,11 +204,8 @@ export function ConnectSupabaseSteps() {
 					}
 				/>
 
-				<TutorialStep
-					title="4. Restart the dev server and refresh this page"
-					autoChecked={isSupabaseReachable === true}
-				/>
+				<TutorialStep title="4. Restart the dev server and refresh this page" />
 			</ol>
-		</div>
+		</details>
 	);
 }
