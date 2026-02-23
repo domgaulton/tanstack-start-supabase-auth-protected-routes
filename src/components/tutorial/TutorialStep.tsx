@@ -1,6 +1,7 @@
 import { Check, Copy } from "lucide-react";
-import { type ReactNode, useCallback, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 interface TutorialStepProps {
 	title: ReactNode;
@@ -9,19 +10,12 @@ interface TutorialStepProps {
 }
 
 export function CopyableCode({ children }: { children: string }) {
-	const [copied, setCopied] = useState(false);
-
-	const handleCopy = useCallback(() => {
-		navigator.clipboard.writeText(children).then(() => {
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		});
-	}, [children]);
+	const { copied, copy } = useCopyToClipboard(children);
 
 	return (
 		<button
 			type="button"
-			onClick={handleCopy}
+			onClick={copy}
 			className="inline-flex items-center gap-1 bg-slate-700 px-1.5 py-0.5 rounded text-gray-300 hover:bg-slate-600 transition-colors cursor-pointer"
 			aria-label={`Copy ${children} to clipboard`}
 		>

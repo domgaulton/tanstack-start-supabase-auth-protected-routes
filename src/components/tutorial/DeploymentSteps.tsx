@@ -1,19 +1,12 @@
 import { Check, ChevronRight, Copy } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { CopyableCode, TutorialStep } from "./TutorialStep";
 
 const GH_SECRETS_CMD =
 	"gh secret set SUPABASE_ACCESS_TOKEN --body \"$(grep '^SUPABASE_ACCESS_TOKEN=' .env | cut -d= -f2-)\" && gh secret set SUPABASE_PROJECT_REF --body \"$(grep '^SUPABASE_PROJECT_REF=' .env | cut -d= -f2-)\" && gh secret set VERCEL_TOKEN --body \"$(grep '^VERCEL_TOKEN=' .env | cut -d= -f2-)\"";
 
 function CopyBlock({ text }: { text: string }) {
-	const [copied, setCopied] = useState(false);
-
-	const handleCopy = useCallback(() => {
-		navigator.clipboard.writeText(text).then(() => {
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		});
-	}, [text]);
+	const { copied, copy: handleCopy } = useCopyToClipboard(text);
 
 	return (
 		<div className="relative">

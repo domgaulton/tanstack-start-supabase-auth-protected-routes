@@ -29,6 +29,9 @@ This has been inspired by the NextJs with Supabase example documentation and gui
   - `forgot-password.tsx` / `reset-password.tsx` — Password reset flow
 - `src/context/AuthContext.tsx` — React context providing `session`, `user`, `isLoading` via `useAuth()` hook
 - `src/utils/supabase.ts` — Supabase client singleton
+- `src/utils/auth.ts` — `requireAuth()` guard used by protected route layouts
+- `src/utils/clipboard.ts` — `copyToClipboard()` utility for clipboard operations
+- `src/hooks/useCopyToClipboard.ts` — React hook wrapping clipboard utility with copied state
 - `src/components/ui/` — shadcn/ui components (button, card, input, label, alert, dialog, checkbox)
 - `src/components/tutorial/` — Onboarding tutorial components (TutorialStep, ConnectSupabaseSteps, SignUpUserSteps)
 - `src/hooks/useSetupStatus.ts` — Hook that detects setup progress (env vars, Supabase reachability, user sign-up)
@@ -87,3 +90,4 @@ Allow claude to run the following commands;
 - npm run typecheck
 - npm run check
 - npm run lint
+- npm run test
