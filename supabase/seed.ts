@@ -45,21 +45,6 @@ async function createUser(user: SeedUser) {
 	}
 
 	console.log(`  Created user: ${data.user.email} (${data.user.id})`);
-
-	if (user.isRobot) {
-		const { error: updateError } = await supabase
-			.from("profiles")
-			.update({ is_robot: true })
-			.eq("id", data.user.id);
-
-		if (updateError) {
-			throw new Error(
-				`Failed to set is_robot for ${user.email}: ${updateError.message}`,
-			);
-		}
-
-		console.log(`  Set is_robot=true for ${user.email}`);
-	}
 }
 
 async function seed() {
