@@ -17,7 +17,7 @@ test.describe("Authentication", () => {
 		await page.goto("/login");
 		await page.waitForLoadState("networkidle");
 		await page.getByLabel("Email").fill(SEED_USER_A.email);
-		await page.getByLabel("Password").fill("wrong-password");
+		await page.getByLabel("Password", { exact: true }).fill("wrong-password");
 		await page.getByRole("button", { name: "Log in" }).click();
 
 		const alert = page.getByRole("alert");
