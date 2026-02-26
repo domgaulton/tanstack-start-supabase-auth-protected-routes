@@ -38,7 +38,11 @@ This has been inspired by the NextJs with Supabase example documentation and gui
 - `src/hooks/useSetupStatus.ts` — Hook that detects setup progress (env vars, Supabase reachability, user sign-up)
 - `src/types/database.types.ts` — Auto-generated Supabase schema types
 - `supabase/migrations/` — SQL migrations (profiles table, RLS policies, triggers)
-- `supabase/seed.ts` — Test user seeding
+- `supabase/seed-data.ts` — Single source of truth for seed/test user data
+- `supabase/seed.ts` — Seed script (imports from seed-data.ts)
+- `e2e/` — Playwright E2E tests
+- `e2e/helpers.ts` — Shared test utilities (imports seed users from seed-data.ts)
+- `playwright.config.ts` — Playwright configuration (local vs CI project setup)
 
 ## Key Commands
 
@@ -53,6 +57,8 @@ npm run format           # Biome format
 npm run check            # Lint + format
 npm run typecheck        # TypeScript type checking
 npm run test             # Vitest unit tests
+npm run test:e2e         # Playwright E2E tests
+npm run test:e2e:ui      # Playwright E2E tests (interactive UI)
 ```
 
 ## Key Patterns
@@ -82,9 +88,24 @@ npm run test             # Vitest unit tests
 - `user-b@example.com` / `password123` (Bob)
 - Local email capture: Mailpit at `http://127.0.0.1:54324`
 
+## Seed Data
+
+Seed data lives in `supabase/seed-data.ts` as the single source of truth. Always reference seed data from this file rather than hardcoding values (in tests, scripts, etc.). Keep `seed-data.ts` and `seed.ts` up to date when schema or test data changes.
+
+## E2E Tests
+
+See `docs/e2e-tests/1-read-me.md` for full documentation. Key points:
+
+- Tests run against a real local Supabase instance
+- Local: single `chromium` project, tests handle their own auth
+- CI: three projects (`setup`, `authenticated`, `unauthenticated`) with storageState for speed
+- Global setup checks Supabase connectivity before running tests
+- Branch name, commit message, or PR title containing `no-e2e-test` skips E2E in CI
+
 ## Updates made by Claude
 
 - Please ensure documentation found in the repo is also updated alongside changes before processing to commiting or pushing features.
+- Please ensure that release notes are created when pushing new features. They should be semantic and claude should auto detect what version to create next. New notes should be added to the `src/routes/release-notes/` file including a link from the `index.ts`
 
 Allow claude to run the following commands;
 
@@ -92,3 +113,5 @@ Allow claude to run the following commands;
 - npm run check
 - npm run lint
 - npm run test
+- npm run test:e2e
+- npx playwright test --list

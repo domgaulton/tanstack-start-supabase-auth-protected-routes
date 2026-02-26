@@ -21,7 +21,8 @@ A starter template demonstrating **TanStack Start** with **Supabase Auth**, prot
 - **Tailwind CSS v4** — Utility-first styling
 - **Biome** — Linting and formatting
 - **Vitest** — Testing framework
-- **CI/CD** — GitHub Actions for checks and deployment
+- **Playwright** — E2E testing with Chromium
+- **CI/CD** — GitHub Actions for checks, E2E tests, and deployment
 - **Vercel Analytics** — Automatic page view tracking in production
 - **Husky** — Pre-commit hooks
 
@@ -121,7 +122,7 @@ npm run db:types    # Regenerate TypeScript types
 npm run db:migrate  # Run pending migrations
 ```
 
-Migrations are in `supabase/migrations/`. Seed data is in `supabase/seed.ts`.
+Migrations are in `supabase/migrations/`. Seed data is defined in `supabase/seed-data.ts` (single source of truth) and applied by `supabase/seed.ts`.
 
 ## shadcn/ui
 
@@ -135,9 +136,24 @@ npx shadcn@latest add <component-name>
 
 ```bash
 npm run build       # Production build
-npm run test        # Run tests
+npm run test        # Run unit tests (Vitest)
+npm run test:e2e    # Run E2E tests (Playwright)
+npm run test:e2e:ui # Run E2E tests with interactive UI
 npm run typecheck   # TypeScript check
 npm run check       # Biome lint + format
+```
+
+### E2E Tests
+
+E2E tests use Playwright with Chromium against a local Supabase instance. See `docs/e2e-tests/1-read-me.md` for full documentation.
+
+```bash
+# Prerequisites: Supabase running and seeded
+npm run db:start
+npm run db:reset
+
+# Run tests
+npm run test:e2e
 ```
 
 ## Deployment

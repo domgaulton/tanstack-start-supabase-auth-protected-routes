@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
+	FileText,
 	Home,
 	Info,
 	LayoutDashboard,
@@ -114,6 +115,18 @@ export default function Header() {
 								<LogIn size={20} />
 								<span className="font-medium">Log in</span>
 							</Link>
+							<Link
+								to="/release-notes"
+								onClick={() => setIsOpen(false)}
+								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+								activeProps={{
+									className:
+										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
+								}}
+							>
+								<FileText size={20} />
+								<span className="font-medium">Release Notes</span>
+							</Link>
 						</>
 					)}
 
@@ -154,6 +167,18 @@ export default function Header() {
 							>
 								<LayoutDashboard size={20} />
 								<span className="font-medium">Dashboard</span>
+							</Link>
+							<Link
+								to="/release-notes"
+								onClick={() => setIsOpen(false)}
+								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+								activeProps={{
+									className:
+										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
+								}}
+							>
+								<FileText size={20} />
+								<span className="font-medium">Release Notes</span>
 							</Link>
 							<Link
 								to="/logout"

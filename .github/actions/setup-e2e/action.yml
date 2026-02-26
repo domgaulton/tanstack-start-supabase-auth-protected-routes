@@ -1,0 +1,35 @@
+name: Setup E2E
+description: Shared setup for E2E test jobs — installs deps, Playwright, Supabase CLI, starts Supabase, and writes .env
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: npm
+
+    - run: npm ci
+      shell: bash
+
+    - name: Install Playwright Chromium
+      run: npx playwright install --with-deps chromium
+      shell: bash
+
+    - uses: supabase/setup-cli@v1
+      with:
+        version: latest
+
+    - name: Start Supabase
+      run: supabase start -x realtime,storage,imgproxy,inbucket,pgadmin-schema-diff,migra,pgbouncer,vector,edge-runtime
+      shell: bash
+
+    - name: Write .env from Supabase status
+      run: |
+        supabase status -o env | sed \
+          -e 's/^API_URL=/SUPABASE_URL=/' \
+          -e 's/^SERVICE_ROLE_KEY=/SUPABASE_SECRET_KEY=/' \
+          -e 's/^ANON_KEY=/VITE_SUPABASE_ANON_KEY=/' \
+          > .env
+        grep '^SUPABASE_URL=' .env | sed 's/^SUPABASE_URL=/VITE_SUPABASE_URL=/' >> .env
+      shell: bash
