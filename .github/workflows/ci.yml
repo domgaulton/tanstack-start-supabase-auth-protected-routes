@@ -73,7 +73,7 @@ jobs:
 
   # Runs when supabase/** files changed — migration check + E2E in one job
   e2e-from-database-changes:
-    name: E2E Tests including Database Migration (using Detected Database Changes)
+    name: E2E Tests + Database Migration (using Detected Database Changes)
     needs: [detect-database-changes, code-quality]
     if: >-
       needs.detect-database-changes.outputs.supabase == 'true'
