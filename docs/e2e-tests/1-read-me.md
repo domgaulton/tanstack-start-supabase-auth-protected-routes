@@ -144,7 +144,7 @@ E2E tests run in GitHub Actions after the `code-quality` job (lint, typecheck, u
 Key CI behaviours:
 
 - A **composite action** (`.github/actions/setup-e2e/action.yml`) handles shared setup (node, npm, Playwright, Supabase CLI, start Supabase, write `.env`)
-- Two conditional E2E jobs: **E2E Tests (using Detected Database Changes)** runs when supabase files changed (includes migration check + schema drift), **E2E Tests** runs otherwise
+- Two conditional E2E jobs: **E2E Tests including Database Migration (using Detected Database Changes)** runs when supabase files changed (includes migration check + schema drift), **E2E Tests** runs otherwise
 - The `detect-database-changes` job outputs a `skip_e2e` flag — E2E jobs are **skipped** when the branch name, commit message, or PR title contains `no-e2e-test`. This logic is centralised in one place rather than duplicated across jobs.
 - Playwright reports are uploaded as artifacts on every run (pass or fail)
 - **Concurrency** — a new push to the same branch cancels any in-progress CI run

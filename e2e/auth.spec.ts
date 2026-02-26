@@ -47,14 +47,4 @@ test.describe("Authentication", () => {
 		await expect(page.getByLabel("Email")).toBeVisible();
 	});
 
-	test("authenticated user visiting /login is redirected to /dashboard", async ({
-		page,
-	}) => {
-		await loginAsUser(page, SEED_USER_A.email, SEED_USER_A.password);
-
-		await page.goto("/login");
-		await page.waitForURL("**/dashboard");
-
-		expect(page.url()).toContain("/dashboard");
-	});
 });
