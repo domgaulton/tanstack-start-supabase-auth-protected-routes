@@ -45,11 +45,11 @@ Before any tests run, `e2e/global-setup.ts` hits the Supabase REST endpoint (`ht
 
 In CI, the config defines three projects:
 
-| Project | Purpose | Auth state | Runs |
-|---------|---------|------------|------|
-| `setup` | Logs in once, saves session to `e2e/.auth/user.json` | Performs fresh login | First, before other projects |
-| `authenticated` | Tests that need a logged-in user | Reuses saved session (no UI login) | After `setup` completes |
-| `unauthenticated` | Tests that verify login/logout/redirect flows | Empty (no cookies or localStorage) | Independently |
+| Project           | Purpose                                              | Auth state                         | Runs                         |
+| ----------------- | ---------------------------------------------------- | ---------------------------------- | ---------------------------- |
+| `setup`           | Logs in once, saves session to `e2e/.auth/user.json` | Performs fresh login               | First, before other projects |
+| `authenticated`   | Tests that need a logged-in user                     | Reuses saved session (no UI login) | After `setup` completes      |
+| `unauthenticated` | Tests that verify login/logout/redirect flows        | Empty (no cookies or localStorage) | Independently                |
 
 ### How storageState works with SSR (CI only)
 
@@ -75,21 +75,21 @@ e2e/
 
 `e2e/helpers.ts` exports:
 
-| Export | Description |
-|--------|-------------|
-| `SEED_USER_A`, `SEED_USER_B` | Seeded test users from `supabase/seed-data.ts` |
-| `loginAsUser(page, email, password)` | Logs in via the UI form and waits for dashboard redirect |
-| `assertNoFetchError(page)` | Asserts the page doesn't show a "Failed to fetch" error |
-| `waitForHydration(page)` | Waits for `networkidle` — use after navigation to ensure React has hydrated |
+| Export                               | Description                                                                 |
+| ------------------------------------ | --------------------------------------------------------------------------- |
+| `SEED_USER_A`, `SEED_USER_B`         | Seeded test users from `supabase/seed-data.ts`                              |
+| `loginAsUser(page, email, password)` | Logs in via the UI form and waits for dashboard redirect                    |
+| `assertNoFetchError(page)`           | Asserts the page doesn't show a "Failed to fetch" error                     |
+| `waitForHydration(page)`             | Waits for `networkidle` — use after navigation to ensure React has hydrated |
 
 ### Seed data
 
 Test data is defined in `supabase/seed-data.ts` (single source of truth). Both the seed script and E2E helpers import from this file.
 
-| Email | Password | Display Name |
-|-------|----------|--------------|
-| `user-a@example.com` | `password123` | Alice |
-| `user-b@example.com` | `password123` | Bob |
+| Email                | Password      | Display Name |
+| -------------------- | ------------- | ------------ |
+| `user-a@example.com` | `password123` | Alice        |
+| `user-b@example.com` | `password123` | Bob          |
 
 ## Writing new tests
 
@@ -98,8 +98,8 @@ Test data is defined in `supabase/seed-data.ts` (single source of truth). Both t
 Create a new `.spec.ts` file in `e2e/`. Add a `beforeEach` that logs in locally (CI handles auth via storageState):
 
 ```ts
-import { expect, test } from "@playwright/test";
-import { SEED_USER_A, loginAsUser } from "./helpers";
+import { expect, test } from '@playwright/test';
+import { SEED_USER_A, loginAsUser } from './helpers';
 
 test.beforeEach(async ({ page }) => {
   if (!process.env.CI) {
@@ -107,13 +107,11 @@ test.beforeEach(async ({ page }) => {
   }
 });
 
-test("dashboard shows welcome message", async ({ page }) => {
-  await page.goto("/dashboard");
-  await page.waitForLoadState("networkidle");
+test('dashboard shows welcome message', async ({ page }) => {
+  await page.goto('/dashboard');
+  await page.waitForLoadState('networkidle');
 
-  await expect(
-    page.getByRole("heading", { name: /Welcome/i }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Welcome/i })).toBeVisible();
 });
 ```
 
@@ -122,15 +120,13 @@ test("dashboard shows welcome message", async ({ page }) => {
 If your test needs to start without any auth session (e.g. testing a public page or the login flow), add `test.use()` at the top of the file to clear any existing state:
 
 ```ts
-import { expect, test } from "@playwright/test";
+import { expect, test } from '@playwright/test';
 
 test.use({ storageState: { cookies: [], origins: [] } });
 
-test("landing page is accessible without auth", async ({ page }) => {
-  await page.goto("/");
-  await expect(
-    page.getByRole("heading", { name: /TanStack Start/i }),
-  ).toBeVisible();
+test('landing page is accessible without auth', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: /TanStack Start/i })).toBeVisible();
 });
 ```
 
@@ -148,7 +144,7 @@ E2E tests run in GitHub Actions after the `code-quality` job (lint, typecheck, u
 Key CI behaviours:
 
 - A **composite action** (`.github/actions/setup-e2e/action.yml`) handles shared setup (node, npm, Playwright, Supabase CLI, start Supabase, write `.env`)
-- Two conditional E2E jobs: **E2E Tests (from detected database changes)** runs when supabase files changed (includes migration check + schema drift), **E2E Tests** runs otherwise
+- Two conditional E2E jobs: **E2E Tests (using Detected Database Changes)** runs when supabase files changed (includes migration check + schema drift), **E2E Tests** runs otherwise
 - The `detect-database-changes` job outputs a `skip_e2e` flag — E2E jobs are **skipped** when the branch name, commit message, or PR title contains `no-e2e-test`. This logic is centralised in one place rather than duplicated across jobs.
 - Playwright reports are uploaded as artifacts on every run (pass or fail)
 - **Concurrency** — a new push to the same branch cancels any in-progress CI run

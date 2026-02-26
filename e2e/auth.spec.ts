@@ -9,9 +9,7 @@ test.describe("Authentication", () => {
 		await loginAsUser(page, SEED_USER_A.email, SEED_USER_A.password);
 
 		await expect(
-			page.getByRole("heading", {
-				name: `Welcome, ${SEED_USER_A.displayName}!`,
-			}),
+			page.getByText(`Welcome, ${SEED_USER_A.displayName}!`),
 		).toBeVisible();
 	});
 
@@ -35,7 +33,7 @@ test.describe("Authentication", () => {
 		await page.waitForURL("/");
 
 		await expect(
-			page.getByRole("heading", { name: /TanStack Start/i }),
+			page.getByRole("heading", { name: "TanStack Start + Supabase Auth" }),
 		).toBeVisible();
 	});
 
