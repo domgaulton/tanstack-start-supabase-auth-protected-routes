@@ -6,8 +6,13 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  lint-and-build:
+  code-quality:
+    name: Code Quality
     runs-on: ubuntu-latest
 
     steps:
@@ -32,13 +37,15 @@ jobs:
       - name: Build
         run: npm run build
 
-  detect-supabase-changes:
+  detect-database-changes:
+    name: Detect Database Changes
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
     outputs:
       supabase: ${{ steps.filter.outputs.supabase }}
+      skip_e2e: ${{ steps.skip.outputs.skip_e2e }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -46,23 +53,38 @@ jobs:
         with:
           filters: |
             supabase:
-              - 'supabase/**'
+              - 'supabase/migrations/**'
+              - 'supabase/config.toml'
+      - name: Check for no-e2e-test skip
+        id: skip
+        run: |
+          SKIP=false
+          if [[ "${{ github.head_ref }}${{ github.ref_name }}" == *"no-e2e-test"* ]]; then
+            SKIP=true
+          fi
+          if [[ "${{ github.event.head_commit.message }}" == *"no-e2e-test"* ]]; then
+            SKIP=true
+          fi
+          if [[ "${{ github.event.pull_request.title }}" == *"no-e2e-test"* ]]; then
+            SKIP=true
+          fi
+          echo "skip_e2e=$SKIP" >> "$GITHUB_OUTPUT"
+        shell: bash
 
-  migration-check:
-    needs: detect-supabase-changes
-    if: needs.detect-supabase-changes.outputs.supabase == 'true'
+  # Runs when supabase/** files changed — migration check + E2E in one job
+  e2e-from-database-changes:
+    name: E2E Tests + Database Migration (using Detected Database Changes)
+    needs: [detect-database-changes, code-quality]
+    if: >-
+      needs.detect-database-changes.outputs.supabase == 'true'
+      && needs.detect-database-changes.outputs.skip_e2e != 'true'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      - uses: supabase/setup-cli@v1
-        with:
-          version: latest
+      - uses: ./.github/actions/setup-e2e
 
-      - name: Start Supabase
-        run: supabase start -x realtime,storage,imgproxy,inbucket,postgrest-api,pgadmin-schema-diff,migra,pgbouncer,vector,edge-runtime
-
+      # ── Migration check ──
       - name: Verify migrations apply cleanly
         run: supabase db reset
 
@@ -74,3 +96,54 @@ jobs:
             echo "$DIFF"
             exit 1
           fi
+
+      # ── Build with Supabase env vars (VITE_* are baked in at build time) ──
+      - name: Regenerate types and build
+        run: |
+          npm run db:types
+          npm run build
+
+      # ── E2E (reuses the running Supabase) ──
+      - name: Seed database
+        run: npm run db:seed
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  # Runs when no supabase/** changes — E2E only (no migration check needed)
+  e2e:
+    name: E2E Tests
+    needs: [detect-database-changes, code-quality]
+    if: >-
+      needs.detect-database-changes.outputs.supabase != 'true'
+      && needs.detect-database-changes.outputs.skip_e2e != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-e2e
+
+      - name: Apply migrations, build, and seed
+        run: |
+          supabase db reset
+          npm run build
+          npm run db:seed
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

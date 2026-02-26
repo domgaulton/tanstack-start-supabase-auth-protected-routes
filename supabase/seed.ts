@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "../src/types/database.types";
+import { type SeedUser, seedUsers } from "./seed-data";
 
 const LOCAL_SUPABASE_URL = "http://127.0.0.1:54321";
 
@@ -19,25 +20,6 @@ console.log(`Seeding against: ${SUPABASE_URL}`);
 const supabase = createClient<Database>(SUPABASE_URL, SECRET_KEY, {
 	auth: { autoRefreshToken: false, persistSession: false },
 });
-
-interface SeedUser {
-	email: string;
-	password: string;
-	displayName: string;
-}
-
-const seedUsers: SeedUser[] = [
-	{
-		email: "user-a@example.com",
-		password: "password123",
-		displayName: "Alice",
-	},
-	{
-		email: "user-b@example.com",
-		password: "password123",
-		displayName: "Bob",
-	},
-];
 
 async function clearExistingUsers(users: SeedUser[]) {
 	for (const user of users) {
@@ -59,8 +41,7 @@ async function createUser(user: SeedUser) {
 	});
 
 	if (error) {
-		console.error(`  Failed to create ${user.email}: ${error.message}`);
-		return;
+		throw new Error(`Failed to create ${user.email}: ${error.message}`);
 	}
 
 	console.log(`  Created user: ${data.user.email} (${data.user.id})`);

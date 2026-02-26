@@ -17,6 +17,10 @@ import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReleaseNotesIndexRouteImport } from './routes/release-notes/index'
+import { Route as ReleaseNotesV120RouteImport } from './routes/release-notes/v1-2-0'
+import { Route as ReleaseNotesV110RouteImport } from './routes/release-notes/v1-1-0'
+import { Route as ReleaseNotesV100RouteImport } from './routes/release-notes/v1-0-0'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -58,6 +62,26 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReleaseNotesIndexRoute = ReleaseNotesIndexRouteImport.update({
+  id: '/release-notes/',
+  path: '/release-notes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReleaseNotesV120Route = ReleaseNotesV120RouteImport.update({
+  id: '/release-notes/v1-2-0',
+  path: '/release-notes/v1-2-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReleaseNotesV110Route = ReleaseNotesV110RouteImport.update({
+  id: '/release-notes/v1-1-0',
+  path: '/release-notes/v1-1-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReleaseNotesV100Route = ReleaseNotesV100RouteImport.update({
+  id: '/release-notes/v1-0-0',
+  path: '/release-notes/v1-0-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -73,6 +97,10 @@ export interface FileRoutesByFullPath {
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
+  '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
+  '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
+  '/release-notes/': typeof ReleaseNotesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -83,6 +111,10 @@ export interface FileRoutesByTo {
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
+  '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
+  '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
+  '/release-notes': typeof ReleaseNotesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,6 +127,10 @@ export interface FileRoutesById {
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
+  '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
+  '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
+  '/release-notes/': typeof ReleaseNotesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -107,6 +143,10 @@ export interface FileRouteTypes {
     | '/logout'
     | '/reset-password'
     | '/dashboard'
+    | '/release-notes/v1-0-0'
+    | '/release-notes/v1-1-0'
+    | '/release-notes/v1-2-0'
+    | '/release-notes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -117,6 +157,10 @@ export interface FileRouteTypes {
     | '/logout'
     | '/reset-password'
     | '/dashboard'
+    | '/release-notes/v1-0-0'
+    | '/release-notes/v1-1-0'
+    | '/release-notes/v1-2-0'
+    | '/release-notes'
   id:
     | '__root__'
     | '/'
@@ -128,6 +172,10 @@ export interface FileRouteTypes {
     | '/logout'
     | '/reset-password'
     | '/_authenticated/dashboard'
+    | '/release-notes/v1-0-0'
+    | '/release-notes/v1-1-0'
+    | '/release-notes/v1-2-0'
+    | '/release-notes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -139,6 +187,10 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   LogoutRoute: typeof LogoutRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ReleaseNotesV100Route: typeof ReleaseNotesV100Route
+  ReleaseNotesV110Route: typeof ReleaseNotesV110Route
+  ReleaseNotesV120Route: typeof ReleaseNotesV120Route
+  ReleaseNotesIndexRoute: typeof ReleaseNotesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -199,6 +251,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/release-notes/': {
+      id: '/release-notes/'
+      path: '/release-notes'
+      fullPath: '/release-notes/'
+      preLoaderRoute: typeof ReleaseNotesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/release-notes/v1-2-0': {
+      id: '/release-notes/v1-2-0'
+      path: '/release-notes/v1-2-0'
+      fullPath: '/release-notes/v1-2-0'
+      preLoaderRoute: typeof ReleaseNotesV120RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/release-notes/v1-1-0': {
+      id: '/release-notes/v1-1-0'
+      path: '/release-notes/v1-1-0'
+      fullPath: '/release-notes/v1-1-0'
+      preLoaderRoute: typeof ReleaseNotesV110RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/release-notes/v1-0-0': {
+      id: '/release-notes/v1-0-0'
+      path: '/release-notes/v1-0-0'
+      fullPath: '/release-notes/v1-0-0'
+      preLoaderRoute: typeof ReleaseNotesV100RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -230,6 +310,10 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   LogoutRoute: LogoutRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ReleaseNotesV100Route: ReleaseNotesV100Route,
+  ReleaseNotesV110Route: ReleaseNotesV110Route,
+  ReleaseNotesV120Route: ReleaseNotesV120Route,
+  ReleaseNotesIndexRoute: ReleaseNotesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

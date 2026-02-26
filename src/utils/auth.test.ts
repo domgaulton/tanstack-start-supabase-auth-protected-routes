@@ -1,16 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { requireAuth } from "./auth";
 
-const mockGetSession = vi.fn();
+const mockGetSessionReady = vi.fn();
 
 vi.mock("@/utils/supabase", () => ({
-	supabase: {
-		auth: {
-			get getSession() {
-				return mockGetSession;
-			},
-		},
-	},
+	getSessionReady: (...args: unknown[]) => mockGetSessionReady(...args),
 }));
 
 vi.mock("@tanstack/react-router", () => ({
@@ -26,9 +20,7 @@ describe("requireAuth", () => {
 	});
 
 	it("throws a redirect to /login when there is no session", async () => {
-		mockGetSession.mockResolvedValue({
-			data: { session: null },
-		});
+		mockGetSessionReady.mockResolvedValue(null);
 
 		try {
 			await requireAuth();
@@ -44,9 +36,7 @@ describe("requireAuth", () => {
 			access_token: "token-123",
 		};
 
-		mockGetSession.mockResolvedValue({
-			data: { session: mockSession },
-		});
+		mockGetSessionReady.mockResolvedValue(mockSession);
 
 		const session = await requireAuth();
 
@@ -54,9 +44,7 @@ describe("requireAuth", () => {
 	});
 
 	it("redirects to /login specifically (not / or /dashboard)", async () => {
-		mockGetSession.mockResolvedValue({
-			data: { session: null },
-		});
+		mockGetSessionReady.mockResolvedValue(null);
 
 		try {
 			await requireAuth();

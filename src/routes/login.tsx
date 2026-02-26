@@ -4,7 +4,7 @@ import {
 	redirect,
 	useNavigate,
 } from "@tanstack/react-router";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/utils/supabase";
+import { getSessionReady, supabase } from "@/utils/supabase";
 
 export const Route = createFileRoute("/login")({
 	head: () => ({
@@ -30,9 +30,7 @@ export const Route = createFileRoute("/login")({
 		],
 	}),
 	async beforeLoad() {
-		const {
-			data: { session },
-		} = await supabase.auth.getSession();
+		const session = await getSessionReady();
 
 		if (session) {
 			throw redirect({ to: "/dashboard" });
@@ -43,6 +41,18 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
 	const navigate = useNavigate();
+
+	// Client-side fallback: on a full page load (e.g. page.goto), beforeLoad runs
+	// on the server where there's no localStorage session. This effect catches the
+	// case where the client has a valid session after hydration.
+	useEffect(() => {
+		getSessionReady().then((session) => {
+			if (session) {
+				navigate({ to: "/dashboard" });
+			}
+		});
+	}, [navigate]);
+
 	const emailId = useId();
 	const passwordId = useId();
 	const confirmPasswordId = useId();
