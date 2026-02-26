@@ -96,6 +96,8 @@ The app runs at [http://127.0.0.1:3000](http://127.0.0.1:3000).
 | `/`                | Landing page                                                      |
 | `/about`           | About this project                                                |
 | `/features`        | Features overview                                                 |
+| `/release-notes`   | Release notes listing                                             |
+| `/release-notes/*` | Individual release note pages (e.g. `/release-notes/v1-0-0`)     |
 | `/login`           | Sign in / sign up                                                 |
 | `/logout`          | Signs out and redirects to `/`                                    |
 | `/forgot-password` | Request a password reset email                                    |
@@ -164,11 +166,14 @@ Configured for Vercel deployment. Set the `VERCEL_*` environment variables and p
 
 | File                                      | Purpose                                      |
 | ----------------------------------------- | -------------------------------------------- |
-| `src/routes/__root.tsx`                   | Root layout with `AuthProvider`, `Header`, and Vercel Analytics |
+| `src/routes/__root.tsx`                   | Root layout with `AuthProvider`, `Header`, `Footer`, and Vercel Analytics |
 | `src/routes/_authenticated.tsx`           | Auth guard layout for protected routes       |
 | `src/routes/_authenticated/dashboard.tsx` | Example protected page                       |
 | `src/context/AuthContext.tsx`             | React context for auth state                 |
-| `src/utils/supabase.ts`                   | Supabase client singleton                    |
+| `src/utils/supabase.ts`                   | Supabase client singleton + `getSessionReady()` |
+| `src/utils/auth.ts`                       | `requireAuth()` auth guard for protected routes |
+| `src/components/Footer.tsx`               | Site-wide footer with release notes and GitHub links |
+| `vitest.config.ts`                        | Vitest config (excludes `e2e/` from unit tests) |
 
 ## Learn More
 

@@ -26,13 +26,16 @@ This has been inspired by the NextJs with Supabase example documentation and gui
   - `_authenticated/dashboard.tsx` — Protected dashboard page
   - `about.tsx` — Public about page with project info and links
   - `features.tsx` — Public features overview with detailed feature grid
-  - `login.tsx` — Combined login/signup form
+  - `release-notes/index.tsx` — Release notes listing page
+  - `release-notes/v1-0-0.tsx` etc. — Individual release note pages (use hyphens not dots for TanStack Router)
+  - `login.tsx` — Combined login/signup form (includes client-side `useEffect` redirect fallback for SSR)
   - `forgot-password.tsx` / `reset-password.tsx` — Password reset flow
 - `src/context/AuthContext.tsx` — React context providing `session`, `user`, `isLoading` via `useAuth()` hook
-- `src/utils/supabase.ts` — Supabase client singleton
-- `src/utils/auth.ts` — `requireAuth()` guard used by protected route layouts
+- `src/utils/supabase.ts` — Supabase client singleton + `getSessionReady()` helper (waits for `INITIAL_SESSION` before checking auth, then delegates to `getSession()` for latest state)
+- `src/utils/auth.ts` — `requireAuth()` guard used by protected route layouts (uses `getSessionReady()`)
 - `src/utils/clipboard.ts` — `copyToClipboard()` utility for clipboard operations
 - `src/hooks/useCopyToClipboard.ts` — React hook wrapping clipboard utility with copied state
+- `src/components/Footer.tsx` — Site-wide footer (release notes link, GitHub link)
 - `src/components/ui/` — shadcn/ui components (button, card, input, label, alert, dialog, checkbox)
 - `src/components/tutorial/` — Onboarding tutorial components (TutorialStep, ConnectSupabaseSteps, SignUpUserSteps)
 - `src/hooks/useSetupStatus.ts` — Hook that detects setup progress (env vars, Supabase reachability, user sign-up)
@@ -41,8 +44,11 @@ This has been inspired by the NextJs with Supabase example documentation and gui
 - `supabase/seed-data.ts` — Single source of truth for seed/test user data
 - `supabase/seed.ts` — Seed script (imports from seed-data.ts)
 - `e2e/` — Playwright E2E tests
+- `e2e/auth.spec.ts` — Unauthenticated auth flow tests (login, bad credentials, logout, redirect guard)
+- `e2e/auth-redirect.spec.ts` — Authenticated redirect tests (runs under `authenticated` CI project)
 - `e2e/helpers.ts` — Shared test utilities (imports seed users from seed-data.ts)
 - `playwright.config.ts` — Playwright configuration (local vs CI project setup)
+- `vitest.config.ts` — Vitest configuration (excludes `e2e/` directory)
 
 ## Key Commands
 
@@ -64,6 +70,7 @@ npm run test:e2e:ui      # Playwright E2E tests (interactive UI)
 ## Key Patterns
 
 - **Protected routes** use `_authenticated.tsx` layout with a `beforeLoad` hook that checks auth state and redirects
+- **Session initialisation** — `getSessionReady()` in `src/utils/supabase.ts` waits for Supabase's `INITIAL_SESSION` event before calling `getSession()`. This prevents race conditions on fresh page loads where `getSession()` returns `null` before localStorage is restored. All `beforeLoad` guards use this helper via `requireAuth()`. The login page also has a client-side `useEffect` fallback because SSR `beforeLoad` runs server-side without access to localStorage.
 - **Auth state** is managed via `AuthContext` — access with `useAuth()` hook anywhere in the component tree
 - **Database types** are auto-generated from the Supabase schema — run `npm run db:types` after migration changes
 - **Profiles table** is auto-created on signup via a PostgreSQL trigger (`handle_new_user`)

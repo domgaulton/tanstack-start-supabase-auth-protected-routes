@@ -4,7 +4,7 @@
 
 End-to-end tests use [Playwright](https://playwright.dev/) with Chromium. They run against a real local Supabase instance with seeded test data, exercising the full stack from browser to database.
 
-Tests live in the `e2e/` directory and are excluded from Vitest (which handles unit tests).
+Tests live in the `e2e/` directory and are excluded from Vitest via `vitest.config.ts` (which handles unit tests).
 
 ## Prerequisites
 
@@ -61,15 +61,32 @@ Supabase auth stores the session in `localStorage`. Playwright's `storageState` 
 
 SSR `beforeLoad` runs server-side without access to client localStorage, which is why tests navigate to the dashboard and wait for `networkidle` before asserting.
 
+### Session initialisation and `getSessionReady()`
+
+On a fresh page load, `supabase.auth.getSession()` can return `null` if called before the auth client restores its session from localStorage. The `getSessionReady()` helper in `src/utils/supabase.ts` solves this by:
+
+1. Waiting for Supabase's `INITIAL_SESSION` event (fires once localStorage has been read)
+2. Then calling `getSession()` to return the **current** session (not a cached value)
+
+All `beforeLoad` guards use `getSessionReady()` via `requireAuth()`. The login page also includes a client-side `useEffect` fallback because `beforeLoad` runs server-side during SSR where there is no localStorage — the `useEffect` catches the session after hydration and redirects accordingly.
+
 ### Test file organisation
 
 ```
 e2e/
-├── global-setup.ts    # Pre-flight Supabase connectivity check
-├── auth.setup.ts      # CI setup project — logs in, saves storageState
-├── helpers.ts         # Shared utilities (loginAsUser, assertNoFetchError, etc.)
-└── auth.spec.ts       # Login, logout, redirect tests
+├── global-setup.ts        # Pre-flight Supabase connectivity check
+├── auth.setup.ts          # CI setup project — logs in, saves storageState
+├── helpers.ts             # Shared utilities (loginAsUser, assertNoFetchError, etc.)
+├── auth.spec.ts           # Login, logout, redirect tests (unauthenticated context)
+└── auth-redirect.spec.ts  # Authenticated redirect tests (e.g. /login → /dashboard)
 ```
+
+### Test separation: unauthenticated vs authenticated
+
+Tests are split across files to align with CI's project-based auth model:
+
+- **`auth.spec.ts`** — Uses `test.use({ storageState: { cookies: [], origins: [] } })` to run without any session. Tests login flow, bad credentials, logout, and unauthenticated redirect guards. Runs in the `unauthenticated` CI project.
+- **`auth-redirect.spec.ts`** — Tests that need an existing session (e.g. verifying that an authenticated user visiting `/login` is redirected to `/dashboard`). Runs in the `authenticated` CI project. Locally, `beforeEach` logs in via UI.
 
 ### Helpers
 

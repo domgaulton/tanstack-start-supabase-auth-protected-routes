@@ -1,6 +1,6 @@
 import type { Session } from "@supabase/supabase-js";
 import { redirect } from "@tanstack/react-router";
-import { supabase } from "@/utils/supabase";
+import { getSessionReady } from "@/utils/supabase";
 
 /**
  * Checks for an active Supabase session.
@@ -8,9 +8,7 @@ import { supabase } from "@/utils/supabase";
  * Returns the session if authenticated.
  */
 export async function requireAuth(): Promise<Session> {
-	const {
-		data: { session },
-	} = await supabase.auth.getSession();
+	const session = await getSessionReady();
 
 	if (!session) {
 		throw redirect({ to: "/login" });
