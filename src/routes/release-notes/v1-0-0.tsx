@@ -47,9 +47,7 @@ function ReleaseV100() {
 							</li>
 							<li className="flex items-start gap-2">
 								<span className="text-cyan-400 mt-1">&#x2022;</span>
-								<span>
-									shadcn/ui component library with Tailwind CSS v4
-								</span>
+								<span>shadcn/ui component library with Tailwind CSS v4</span>
 							</li>
 						</ul>
 					</section>

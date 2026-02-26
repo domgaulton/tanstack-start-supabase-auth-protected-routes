@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import type { FileRoutesByTo } from "@/routeTree.gen";
 import { ArrowLeft, ExternalLink, Tag } from "lucide-react";
+import type { FileRoutesByTo } from "@/routeTree.gen";
 
 const releases: {
 	version: string;

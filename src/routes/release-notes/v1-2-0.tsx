@@ -101,9 +101,7 @@ function ReleaseV120() {
 						<ul className="space-y-3 text-gray-300">
 							<li className="flex items-start gap-2">
 								<span className="text-cyan-400 mt-1">&#x2022;</span>
-								<span>
-									Composite GitHub Action for shared E2E CI setup
-								</span>
+								<span>Composite GitHub Action for shared E2E CI setup</span>
 							</li>
 							<li className="flex items-start gap-2">
 								<span className="text-cyan-400 mt-1">&#x2022;</span>
@@ -132,5 +130,5 @@ function ReleaseV120() {
 				</div>
 			</article>
 		</div>
-	)
+	);
 }

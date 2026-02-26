@@ -50,9 +50,7 @@ function ReleaseV110() {
 							</li>
 							<li className="flex items-start gap-2">
 								<span className="text-cyan-400 mt-1">&#x2022;</span>
-								<span>
-									Vercel deployment documentation and support
-								</span>
+								<span>Vercel deployment documentation and support</span>
 							</li>
 						</ul>
 					</section>
