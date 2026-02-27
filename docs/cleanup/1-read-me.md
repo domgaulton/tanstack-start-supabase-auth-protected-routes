@@ -21,7 +21,12 @@ The script asks four questions:
 
 Database migration checks in CI are **not configurable** — they always remain.
 
-After your selections, it applies all changes and runs `npm install` to sync dependencies.
+After your selections, it applies all changes then automatically:
+
+1. Removes the cleanup script itself (this script, its tests, and docs)
+2. Runs `npm install` to sync the lock file
+3. Runs `npm run build` to regenerate the TanStack Router route tree
+4. Runs `biome check --write` to fix any formatting issues from the transforms
 
 ## What gets removed
 
@@ -43,6 +48,7 @@ Also modifies:
 | `src/components/Footer.tsx` | Removes the release notes `<Link>` and its import |
 | `src/components/Header.tsx` | Removes About, Features, and Release Notes nav links plus `FileText`, `Info`, `Sparkles` icon imports |
 | `src/routes/index.tsx` | Removes "See all features in detail" link, `/about` and `/features` route table rows, and the dev-only onboarding paragraph |
+| `src/components/tutorial/DeploymentSteps.tsx` | Removes the "Clean up the starter template" tutorial step and its `Link` import |
 | `src/routes/__root.tsx` | Removes `<Analytics />` component and its import |
 | `package.json` | Removes `@vercel/analytics` dependency |
 
@@ -80,6 +86,22 @@ Also modifies:
 | `.github/workflows/ci.yml` | Removes the standalone `e2e` job and E2E steps from `e2e-from-database-changes` (keeps migration check, type generation, and build steps) |
 | `.gitignore` | Removes the Playwright section |
 
+### Self-cleanup
+
+The script always removes itself as the final step:
+
+| Deleted | Description |
+|---------|-------------|
+| `scripts/cleanup.ts` | The cleanup script itself |
+| `scripts/cleanup.test.ts` | Cleanup transform tests |
+| `docs/cleanup/` | This documentation |
+
+Also modifies:
+
+| File | Change |
+|------|--------|
+| `package.json` | Removes the `cleanup` script and `@clack/prompts` dependency |
+
 ## How it works
 
 The script uses **marker comments** in source files (`cleanup:TAG-start` / `cleanup:TAG-end`) to identify removable blocks. A `removeMarkedBlocks(content, tag)` helper scans lines and drops everything between matching markers (inclusive). This approach is comment-syntax-agnostic — it works with `//`, `{/* */}`, and `#` comments.
@@ -92,7 +114,7 @@ Key design decisions:
 - **Pure functions** — all transforms are exported and unit-tested independently against real source files
 - **Idempotent** — safe to run multiple times; `existsSync` guards prevent errors on already-deleted files
 - **Order-independent** — feature removals don't interfere with each other
-- **Automatic `npm install`** — runs after all changes to sync the lock file
+- **Automatic post-cleanup** — runs `npm install`, `npm run build` (regenerates route tree), and `biome check --write` (fixes formatting)
 
 ## The `(clean-up)` route group
 
@@ -101,6 +123,7 @@ The `src/routes/(clean-up)/` directory uses TanStack Router's **pathless route g
 ```
 src/routes/(clean-up)/
 ├── about.tsx           → serves /about
+├── cleanup.tsx         → serves /cleanup
 ├── features.tsx        → serves /features
 └── release-notes/
     ├── index.tsx       → serves /release-notes
