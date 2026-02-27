@@ -418,6 +418,10 @@ async function main() {
 	execSync("npm install", { cwd: ROOT, stdio: "ignore" });
 	s.stop("Dependencies synced.");
 
+	s.start("Formatting code...");
+	execSync("npx biome check --write", { cwd: ROOT, stdio: "ignore" });
+	s.stop("Code formatted.");
+
 	const summary: string[] = [];
 	if (willCleanup) {
 		summary.push("removed starter template files");
