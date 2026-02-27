@@ -12,12 +12,14 @@ dist-ssr
 __unconfig*
 todos.json
 
+# cleanup:e2e-start
 # Playwright
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /e2e/.auth/
+# cleanup:e2e-end
 
 # Supabase
 supabase/.temp

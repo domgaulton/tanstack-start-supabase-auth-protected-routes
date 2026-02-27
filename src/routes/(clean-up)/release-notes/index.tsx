@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, ExternalLink, Tag } from "lucide-react";
 import { releases } from "@/data/releases";
 
-export const Route = createFileRoute("/release-notes/")({
+export const Route = createFileRoute("/(clean-up)/release-notes/")({
 	head: () => ({
 		meta: [
 			{ title: "Release Notes | TanStack Start + Supabase Auth" },
@@ -71,5 +71,5 @@ function ReleaseNotesIndex() {
 				</div>
 			</section>
 		</div>
-	);
+	)
 }

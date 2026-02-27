@@ -13,17 +13,19 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as FeaturesRouteImport } from './routes/features'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ReleaseNotesIndexRouteImport } from './routes/release-notes/index'
-import { Route as ReleaseNotesV130RouteImport } from './routes/release-notes/v1-3-0'
-import { Route as ReleaseNotesV121RouteImport } from './routes/release-notes/v1-2-1'
-import { Route as ReleaseNotesV120RouteImport } from './routes/release-notes/v1-2-0'
-import { Route as ReleaseNotesV110RouteImport } from './routes/release-notes/v1-1-0'
-import { Route as ReleaseNotesV100RouteImport } from './routes/release-notes/v1-0-0'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as cleanUpFeaturesRouteImport } from './routes/(clean-up)/features'
+import { Route as cleanUpCleanupRouteImport } from './routes/(clean-up)/cleanup'
+import { Route as cleanUpAboutRouteImport } from './routes/(clean-up)/about'
+import { Route as cleanUpReleaseNotesIndexRouteImport } from './routes/(clean-up)/release-notes/index'
+import { Route as cleanUpReleaseNotesV140RouteImport } from './routes/(clean-up)/release-notes/v1-4-0'
+import { Route as cleanUpReleaseNotesV130RouteImport } from './routes/(clean-up)/release-notes/v1-3-0'
+import { Route as cleanUpReleaseNotesV121RouteImport } from './routes/(clean-up)/release-notes/v1-2-1'
+import { Route as cleanUpReleaseNotesV120RouteImport } from './routes/(clean-up)/release-notes/v1-2-0'
+import { Route as cleanUpReleaseNotesV110RouteImport } from './routes/(clean-up)/release-notes/v1-1-0'
+import { Route as cleanUpReleaseNotesV100RouteImport } from './routes/(clean-up)/release-notes/v1-0-0'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -45,16 +47,6 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FeaturesRoute = FeaturesRouteImport.update({
-  id: '/features',
-  path: '/features',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
@@ -64,159 +56,194 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReleaseNotesIndexRoute = ReleaseNotesIndexRouteImport.update({
-  id: '/release-notes/',
-  path: '/release-notes/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReleaseNotesV130Route = ReleaseNotesV130RouteImport.update({
-  id: '/release-notes/v1-3-0',
-  path: '/release-notes/v1-3-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReleaseNotesV121Route = ReleaseNotesV121RouteImport.update({
-  id: '/release-notes/v1-2-1',
-  path: '/release-notes/v1-2-1',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReleaseNotesV120Route = ReleaseNotesV120RouteImport.update({
-  id: '/release-notes/v1-2-0',
-  path: '/release-notes/v1-2-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReleaseNotesV110Route = ReleaseNotesV110RouteImport.update({
-  id: '/release-notes/v1-1-0',
-  path: '/release-notes/v1-1-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReleaseNotesV100Route = ReleaseNotesV100RouteImport.update({
-  id: '/release-notes/v1-0-0',
-  path: '/release-notes/v1-0-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const cleanUpFeaturesRoute = cleanUpFeaturesRouteImport.update({
+  id: '/(clean-up)/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const cleanUpCleanupRoute = cleanUpCleanupRouteImport.update({
+  id: '/(clean-up)/cleanup',
+  path: '/cleanup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const cleanUpAboutRoute = cleanUpAboutRouteImport.update({
+  id: '/(clean-up)/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const cleanUpReleaseNotesIndexRoute =
+  cleanUpReleaseNotesIndexRouteImport.update({
+    id: '/(clean-up)/release-notes/',
+    path: '/release-notes/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const cleanUpReleaseNotesV140Route = cleanUpReleaseNotesV140RouteImport.update({
+  id: '/(clean-up)/release-notes/v1-4-0',
+  path: '/release-notes/v1-4-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const cleanUpReleaseNotesV130Route = cleanUpReleaseNotesV130RouteImport.update({
+  id: '/(clean-up)/release-notes/v1-3-0',
+  path: '/release-notes/v1-3-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const cleanUpReleaseNotesV121Route = cleanUpReleaseNotesV121RouteImport.update({
+  id: '/(clean-up)/release-notes/v1-2-1',
+  path: '/release-notes/v1-2-1',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const cleanUpReleaseNotesV120Route = cleanUpReleaseNotesV120RouteImport.update({
+  id: '/(clean-up)/release-notes/v1-2-0',
+  path: '/release-notes/v1-2-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const cleanUpReleaseNotesV110Route = cleanUpReleaseNotesV110RouteImport.update({
+  id: '/(clean-up)/release-notes/v1-1-0',
+  path: '/release-notes/v1-1-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const cleanUpReleaseNotesV100Route = cleanUpReleaseNotesV100RouteImport.update({
+  id: '/(clean-up)/release-notes/v1-0-0',
+  path: '/release-notes/v1-0-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/about': typeof cleanUpAboutRoute
+  '/cleanup': typeof cleanUpCleanupRoute
+  '/features': typeof cleanUpFeaturesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
-  '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
-  '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
-  '/release-notes/v1-2-1': typeof ReleaseNotesV121Route
-  '/release-notes/v1-3-0': typeof ReleaseNotesV130Route
-  '/release-notes/': typeof ReleaseNotesIndexRoute
+  '/release-notes/v1-0-0': typeof cleanUpReleaseNotesV100Route
+  '/release-notes/v1-1-0': typeof cleanUpReleaseNotesV110Route
+  '/release-notes/v1-2-0': typeof cleanUpReleaseNotesV120Route
+  '/release-notes/v1-2-1': typeof cleanUpReleaseNotesV121Route
+  '/release-notes/v1-3-0': typeof cleanUpReleaseNotesV130Route
+  '/release-notes/v1-4-0': typeof cleanUpReleaseNotesV140Route
+  '/release-notes/': typeof cleanUpReleaseNotesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/about': typeof cleanUpAboutRoute
+  '/cleanup': typeof cleanUpCleanupRoute
+  '/features': typeof cleanUpFeaturesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
-  '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
-  '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
-  '/release-notes/v1-2-1': typeof ReleaseNotesV121Route
-  '/release-notes/v1-3-0': typeof ReleaseNotesV130Route
-  '/release-notes': typeof ReleaseNotesIndexRoute
+  '/release-notes/v1-0-0': typeof cleanUpReleaseNotesV100Route
+  '/release-notes/v1-1-0': typeof cleanUpReleaseNotesV110Route
+  '/release-notes/v1-2-0': typeof cleanUpReleaseNotesV120Route
+  '/release-notes/v1-2-1': typeof cleanUpReleaseNotesV121Route
+  '/release-notes/v1-3-0': typeof cleanUpReleaseNotesV130Route
+  '/release-notes/v1-4-0': typeof cleanUpReleaseNotesV140Route
+  '/release-notes': typeof cleanUpReleaseNotesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/about': typeof AboutRoute
-  '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/(clean-up)/about': typeof cleanUpAboutRoute
+  '/(clean-up)/cleanup': typeof cleanUpCleanupRoute
+  '/(clean-up)/features': typeof cleanUpFeaturesRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
-  '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
-  '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
-  '/release-notes/v1-2-1': typeof ReleaseNotesV121Route
-  '/release-notes/v1-3-0': typeof ReleaseNotesV130Route
-  '/release-notes/': typeof ReleaseNotesIndexRoute
+  '/(clean-up)/release-notes/v1-0-0': typeof cleanUpReleaseNotesV100Route
+  '/(clean-up)/release-notes/v1-1-0': typeof cleanUpReleaseNotesV110Route
+  '/(clean-up)/release-notes/v1-2-0': typeof cleanUpReleaseNotesV120Route
+  '/(clean-up)/release-notes/v1-2-1': typeof cleanUpReleaseNotesV121Route
+  '/(clean-up)/release-notes/v1-3-0': typeof cleanUpReleaseNotesV130Route
+  '/(clean-up)/release-notes/v1-4-0': typeof cleanUpReleaseNotesV140Route
+  '/(clean-up)/release-notes/': typeof cleanUpReleaseNotesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
-    | '/features'
     | '/forgot-password'
     | '/login'
     | '/logout'
     | '/reset-password'
+    | '/about'
+    | '/cleanup'
+    | '/features'
     | '/dashboard'
     | '/release-notes/v1-0-0'
     | '/release-notes/v1-1-0'
     | '/release-notes/v1-2-0'
     | '/release-notes/v1-2-1'
     | '/release-notes/v1-3-0'
+    | '/release-notes/v1-4-0'
     | '/release-notes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
-    | '/features'
     | '/forgot-password'
     | '/login'
     | '/logout'
     | '/reset-password'
+    | '/about'
+    | '/cleanup'
+    | '/features'
     | '/dashboard'
     | '/release-notes/v1-0-0'
     | '/release-notes/v1-1-0'
     | '/release-notes/v1-2-0'
     | '/release-notes/v1-2-1'
     | '/release-notes/v1-3-0'
+    | '/release-notes/v1-4-0'
     | '/release-notes'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
-    | '/about'
-    | '/features'
     | '/forgot-password'
     | '/login'
     | '/logout'
     | '/reset-password'
+    | '/(clean-up)/about'
+    | '/(clean-up)/cleanup'
+    | '/(clean-up)/features'
     | '/_authenticated/dashboard'
-    | '/release-notes/v1-0-0'
-    | '/release-notes/v1-1-0'
-    | '/release-notes/v1-2-0'
-    | '/release-notes/v1-2-1'
-    | '/release-notes/v1-3-0'
-    | '/release-notes/'
+    | '/(clean-up)/release-notes/v1-0-0'
+    | '/(clean-up)/release-notes/v1-1-0'
+    | '/(clean-up)/release-notes/v1-2-0'
+    | '/(clean-up)/release-notes/v1-2-1'
+    | '/(clean-up)/release-notes/v1-3-0'
+    | '/(clean-up)/release-notes/v1-4-0'
+    | '/(clean-up)/release-notes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  AboutRoute: typeof AboutRoute
-  FeaturesRoute: typeof FeaturesRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   LogoutRoute: typeof LogoutRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  ReleaseNotesV100Route: typeof ReleaseNotesV100Route
-  ReleaseNotesV110Route: typeof ReleaseNotesV110Route
-  ReleaseNotesV120Route: typeof ReleaseNotesV120Route
-  ReleaseNotesV121Route: typeof ReleaseNotesV121Route
-  ReleaseNotesV130Route: typeof ReleaseNotesV130Route
-  ReleaseNotesIndexRoute: typeof ReleaseNotesIndexRoute
+  cleanUpAboutRoute: typeof cleanUpAboutRoute
+  cleanUpCleanupRoute: typeof cleanUpCleanupRoute
+  cleanUpFeaturesRoute: typeof cleanUpFeaturesRoute
+  cleanUpReleaseNotesV100Route: typeof cleanUpReleaseNotesV100Route
+  cleanUpReleaseNotesV110Route: typeof cleanUpReleaseNotesV110Route
+  cleanUpReleaseNotesV120Route: typeof cleanUpReleaseNotesV120Route
+  cleanUpReleaseNotesV121Route: typeof cleanUpReleaseNotesV121Route
+  cleanUpReleaseNotesV130Route: typeof cleanUpReleaseNotesV130Route
+  cleanUpReleaseNotesV140Route: typeof cleanUpReleaseNotesV140Route
+  cleanUpReleaseNotesIndexRoute: typeof cleanUpReleaseNotesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -249,20 +276,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/features': {
-      id: '/features'
-      path: '/features'
-      fullPath: '/features'
-      preLoaderRoute: typeof FeaturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -277,54 +290,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/release-notes/': {
-      id: '/release-notes/'
-      path: '/release-notes'
-      fullPath: '/release-notes/'
-      preLoaderRoute: typeof ReleaseNotesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/release-notes/v1-3-0': {
-      id: '/release-notes/v1-3-0'
-      path: '/release-notes/v1-3-0'
-      fullPath: '/release-notes/v1-3-0'
-      preLoaderRoute: typeof ReleaseNotesV130RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/release-notes/v1-2-1': {
-      id: '/release-notes/v1-2-1'
-      path: '/release-notes/v1-2-1'
-      fullPath: '/release-notes/v1-2-1'
-      preLoaderRoute: typeof ReleaseNotesV121RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/release-notes/v1-2-0': {
-      id: '/release-notes/v1-2-0'
-      path: '/release-notes/v1-2-0'
-      fullPath: '/release-notes/v1-2-0'
-      preLoaderRoute: typeof ReleaseNotesV120RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/release-notes/v1-1-0': {
-      id: '/release-notes/v1-1-0'
-      path: '/release-notes/v1-1-0'
-      fullPath: '/release-notes/v1-1-0'
-      preLoaderRoute: typeof ReleaseNotesV110RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/release-notes/v1-0-0': {
-      id: '/release-notes/v1-0-0'
-      path: '/release-notes/v1-0-0'
-      fullPath: '/release-notes/v1-0-0'
-      preLoaderRoute: typeof ReleaseNotesV100RouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
+    }
+    '/(clean-up)/features': {
+      id: '/(clean-up)/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof cleanUpFeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/cleanup': {
+      id: '/(clean-up)/cleanup'
+      path: '/cleanup'
+      fullPath: '/cleanup'
+      preLoaderRoute: typeof cleanUpCleanupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/about': {
+      id: '/(clean-up)/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof cleanUpAboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/release-notes/': {
+      id: '/(clean-up)/release-notes/'
+      path: '/release-notes'
+      fullPath: '/release-notes/'
+      preLoaderRoute: typeof cleanUpReleaseNotesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/release-notes/v1-4-0': {
+      id: '/(clean-up)/release-notes/v1-4-0'
+      path: '/release-notes/v1-4-0'
+      fullPath: '/release-notes/v1-4-0'
+      preLoaderRoute: typeof cleanUpReleaseNotesV140RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/release-notes/v1-3-0': {
+      id: '/(clean-up)/release-notes/v1-3-0'
+      path: '/release-notes/v1-3-0'
+      fullPath: '/release-notes/v1-3-0'
+      preLoaderRoute: typeof cleanUpReleaseNotesV130RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/release-notes/v1-2-1': {
+      id: '/(clean-up)/release-notes/v1-2-1'
+      path: '/release-notes/v1-2-1'
+      fullPath: '/release-notes/v1-2-1'
+      preLoaderRoute: typeof cleanUpReleaseNotesV121RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/release-notes/v1-2-0': {
+      id: '/(clean-up)/release-notes/v1-2-0'
+      path: '/release-notes/v1-2-0'
+      fullPath: '/release-notes/v1-2-0'
+      preLoaderRoute: typeof cleanUpReleaseNotesV120RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/release-notes/v1-1-0': {
+      id: '/(clean-up)/release-notes/v1-1-0'
+      path: '/release-notes/v1-1-0'
+      fullPath: '/release-notes/v1-1-0'
+      preLoaderRoute: typeof cleanUpReleaseNotesV110RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(clean-up)/release-notes/v1-0-0': {
+      id: '/(clean-up)/release-notes/v1-0-0'
+      path: '/release-notes/v1-0-0'
+      fullPath: '/release-notes/v1-0-0'
+      preLoaderRoute: typeof cleanUpReleaseNotesV100RouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -344,18 +385,20 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  AboutRoute: AboutRoute,
-  FeaturesRoute: FeaturesRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   LogoutRoute: LogoutRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  ReleaseNotesV100Route: ReleaseNotesV100Route,
-  ReleaseNotesV110Route: ReleaseNotesV110Route,
-  ReleaseNotesV120Route: ReleaseNotesV120Route,
-  ReleaseNotesV121Route: ReleaseNotesV121Route,
-  ReleaseNotesV130Route: ReleaseNotesV130Route,
-  ReleaseNotesIndexRoute: ReleaseNotesIndexRoute,
+  cleanUpAboutRoute: cleanUpAboutRoute,
+  cleanUpCleanupRoute: cleanUpCleanupRoute,
+  cleanUpFeaturesRoute: cleanUpFeaturesRoute,
+  cleanUpReleaseNotesV100Route: cleanUpReleaseNotesV100Route,
+  cleanUpReleaseNotesV110Route: cleanUpReleaseNotesV110Route,
+  cleanUpReleaseNotesV120Route: cleanUpReleaseNotesV120Route,
+  cleanUpReleaseNotesV121Route: cleanUpReleaseNotesV121Route,
+  cleanUpReleaseNotesV130Route: cleanUpReleaseNotesV130Route,
+  cleanUpReleaseNotesV140Route: cleanUpReleaseNotesV140Route,
+  cleanUpReleaseNotesIndexRoute: cleanUpReleaseNotesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

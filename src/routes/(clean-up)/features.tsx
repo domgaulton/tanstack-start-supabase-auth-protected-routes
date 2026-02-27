@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute("/features")({
+export const Route = createFileRoute("/(clean-up)/features")({
 	head: () => ({
 		meta: [
 			{ title: "Features | TanStack Start + Supabase Auth" },
@@ -80,6 +80,7 @@ function FeaturesPage() {
 			description:
 				"Automated CI pipeline with type checking, linting, formatting, and test runs on every pull request. Deployment pipeline for Vercel included.",
 		},
+		// cleanup:analytics-start
 		{
 			icon: <BarChart3 className="w-10 h-10 text-blue-400" />,
 			title: "Vercel Analytics",
@@ -87,6 +88,7 @@ function FeaturesPage() {
 				"Built-in page view analytics via @vercel/analytics. Automatically tracks traffic in production with zero configuration required.",
 			link: "https://vercel.com/docs/analytics",
 		},
+		// cleanup:analytics-end
 		{
 			icon: <Rocket className="w-10 h-10 text-red-400" />,
 			title: "Vercel Deployment",

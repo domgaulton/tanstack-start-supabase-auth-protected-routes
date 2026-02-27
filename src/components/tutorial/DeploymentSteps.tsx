@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { Check, ChevronRight, Copy } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { CopyableCode, TutorialStep } from "./TutorialStep";
@@ -47,6 +48,28 @@ export function DeploymentSteps() {
 				.
 			</p>
 			<ol className="mt-4 space-y-6 list-none">
+				<TutorialStep
+					title="0. (Optional) Clean up the starter template"
+					description={
+						<div className="space-y-3 pt-1">
+							<p className="text-sm text-gray-400">
+								Before deploying, strip out demo pages, e2e tests, and analytics
+								you don't need:
+							</p>
+							<CopyBlock text="npm run cleanup" />
+							<p className="text-xs text-gray-500">
+								<Link
+									to="/cleanup"
+									className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300"
+								>
+									Learn more
+								</Link>{" "}
+								about what the cleanup script removes and how it works.
+							</p>
+						</div>
+					}
+				/>
+
 				<TutorialStep
 					title="1. Get your Supabase access token"
 					description={

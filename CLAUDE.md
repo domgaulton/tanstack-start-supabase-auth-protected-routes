@@ -24,10 +24,12 @@ This has been inspired by the NextJs with Supabase example documentation and gui
   - `__root.tsx` — Root layout (AuthProvider, Header, Vercel Analytics)
   - `_authenticated.tsx` — Route guard layout (redirects to `/login` if unauthenticated)
   - `_authenticated/dashboard.tsx` — Protected dashboard page
-  - `about.tsx` — Public about page with project info and links
-  - `features.tsx` — Public features overview with detailed feature grid
-  - `release-notes/index.tsx` — Release notes listing page
-  - `release-notes/v1-0-0.tsx` etc. — Individual release note pages (use hyphens not dots for TanStack Router)
+  - `(clean-up)/` — Pathless route group containing optional demo pages (removable via `npm run cleanup`)
+    - `about.tsx` — Public about page with project info and links
+    - `cleanup.tsx` — Cleanup script info page (what it removes, how it works, route group explanation)
+    - `features.tsx` — Public features overview with detailed feature grid
+    - `release-notes/index.tsx` — Release notes listing page
+    - `release-notes/v1-0-0.tsx` etc. — Individual release note pages (use hyphens not dots for TanStack Router)
   - `login.tsx` — Combined login/signup form (includes client-side `useEffect` redirect fallback for SSR)
   - `forgot-password.tsx` / `reset-password.tsx` — Password reset flow
 - `src/data/releases.ts` — Single source of truth for release metadata (`ReleaseMetadata` interface, `releases` array, `getReleaseByVersion()` helper)
@@ -53,6 +55,7 @@ This has been inspired by the NextJs with Supabase example documentation and gui
 - `e2e/helpers.ts` — Shared test utilities (imports seed users from seed-data.ts)
 - `playwright.config.ts` — Playwright configuration (local vs CI project setup)
 - `vitest.config.ts` — Vitest configuration (excludes `e2e/` directory)
+- `scripts/cleanup.ts` — Interactive CLI to remove optional features (demo pages, e2e, analytics) and rename the project (see `docs/cleanup/1-read-me.md`)
 
 ## Key Commands
 
@@ -69,6 +72,7 @@ npm run typecheck        # TypeScript type checking
 npm run test             # Vitest unit tests
 npm run test:e2e         # Playwright E2E tests
 npm run test:e2e:ui      # Playwright E2E tests (interactive UI)
+npm run cleanup          # Interactive cleanup — remove demo pages, e2e, analytics; rename project
 ```
 
 ## Key Patterns
@@ -116,7 +120,7 @@ See `docs/e2e-tests/1-read-me.md` for full documentation. Key points:
 ## Updates made by Claude
 
 - Please ensure documentation found in the repo is also updated alongside changes before processing to commiting or pushing features.
-- Please ensure that release notes are created when pushing new features. They should be semantic and claude should auto detect what version to create next. New release route files should be added to `src/routes/release-notes/` and their metadata added to `src/data/releases.ts`. Bump the `version` in `package.json` to match. The `release.yml` GitHub Action will auto-create a GitHub Release and git tag on merge to main.
+- Please ensure that release notes are created when pushing new features. They should be semantic and claude should auto detect what version to create next. New release route files should be added to `src/routes/(clean-up)/release-notes/` and their metadata added to `src/data/releases.ts`. Bump the `version` in `package.json` to match. The `release.yml` GitHub Action will auto-create a GitHub Release and git tag on merge to main.
 
 Allow claude to run the following commands;
 
