@@ -1,5 +1,3 @@
-import { Link } from "@tanstack/react-router";
-
 export default function Footer() {
 	return (
 		<footer className="bg-gray-800 border-t border-gray-700 py-6 px-6">
@@ -8,14 +6,6 @@ export default function Footer() {
 					TanStack Start + Supabase Auth
 				</span>
 				<div className="flex items-center gap-6">
-					{/* cleanup:demo-pages-start */}
-					<Link
-						to="/release-notes"
-						className="hover:text-cyan-400 transition-colors"
-					>
-						Release Notes
-					</Link>
-					{/* cleanup:demo-pages-end */}
 					<a
 						href="https://github.com/domgaulton/tanstack-start-supabase-auth-protected-routes"
 						target="_blank"

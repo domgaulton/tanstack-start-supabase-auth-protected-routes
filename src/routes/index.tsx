@@ -153,13 +153,6 @@ function HomePage() {
 					<div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-8">
 						<DeploymentSteps />
 					</div>
-					{/* cleanup:demo-pages-start */}
-					<p className="text-sm text-gray-500 text-center">
-						These onboarding steps are only visible in development. See the
-						"Clean up the starter template" step above to remove demo pages and
-						customise the project for your needs.
-					</p>
-					{/* cleanup:demo-pages-end */}
 				</section>
 			)}
 
@@ -180,17 +173,6 @@ function HomePage() {
 						</div>
 					))}
 				</div>
-				{/* cleanup:demo-pages-start */}
-				<div className="text-center">
-					<Link
-						to="/features"
-						className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
-					>
-						See all features in detail
-						<ExternalLink className="w-4 h-4" />
-					</Link>
-				</div>
-				{/* cleanup:demo-pages-end */}
 			</section>
 
 			<section className="py-16 px-6 max-w-5xl mx-auto space-y-12">
@@ -319,26 +301,6 @@ function HomePage() {
 									</td>
 									<td className="py-3">Set a new password (via email link)</td>
 								</tr>
-								{/* cleanup:demo-pages-start */}
-								<tr className="border-b border-slate-700/50">
-									<td className="py-3 pr-4">
-										<code className="bg-slate-900 rounded px-2 py-1 text-sm font-mono text-cyan-400">
-											/about
-										</code>
-									</td>
-									<td className="py-3">About this project</td>
-								</tr>
-								{/* cleanup:demo-pages-end */}
-								{/* cleanup:demo-pages-start */}
-								<tr className="border-b border-slate-700/50">
-									<td className="py-3 pr-4">
-										<code className="bg-slate-900 rounded px-2 py-1 text-sm font-mono text-cyan-400">
-											/features
-										</code>
-									</td>
-									<td className="py-3">Features overview</td>
-								</tr>
-								{/* cleanup:demo-pages-end */}
 								<tr>
 									<td className="py-3 pr-4">
 										<code className="bg-slate-900 rounded px-2 py-1 text-sm font-mono text-cyan-400">
