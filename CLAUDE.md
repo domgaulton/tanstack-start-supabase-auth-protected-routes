@@ -30,6 +30,10 @@ This has been inspired by the NextJs with Supabase example documentation and gui
   - `release-notes/v1-0-0.tsx` etc. — Individual release note pages (use hyphens not dots for TanStack Router)
   - `login.tsx` — Combined login/signup form (includes client-side `useEffect` redirect fallback for SSR)
   - `forgot-password.tsx` / `reset-password.tsx` — Password reset flow
+- `src/data/releases.ts` — Single source of truth for release metadata (`ReleaseMetadata` interface, `releases` array, `getReleaseByVersion()` helper)
+- `src/components/release-notes/ReleaseNoteLayout.tsx` — Shared layout wrapper for individual release note pages (background, article, header, sections)
+- `src/components/release-notes/ReleaseNoteHeader.tsx` — Shared header component (back link, version badge, title, date, GitHub issue links)
+- `src/components/release-notes/ReleaseNoteDetail.tsx` — Renders release sections from data (supports backtick-delimited inline code in items)
 - `src/context/AuthContext.tsx` — React context providing `session`, `user`, `isLoading` via `useAuth()` hook
 - `src/utils/supabase.ts` — Supabase client singleton + `getSessionReady()` helper (waits for `INITIAL_SESSION` before checking auth, then delegates to `getSession()` for latest state)
 - `src/utils/auth.ts` — `requireAuth()` guard used by protected route layouts (uses `getSessionReady()`)
@@ -112,7 +116,7 @@ See `docs/e2e-tests/1-read-me.md` for full documentation. Key points:
 ## Updates made by Claude
 
 - Please ensure documentation found in the repo is also updated alongside changes before processing to commiting or pushing features.
-- Please ensure that release notes are created when pushing new features. They should be semantic and claude should auto detect what version to create next. New notes should be added to the `src/routes/release-notes/` file including a link from the `index.ts`
+- Please ensure that release notes are created when pushing new features. They should be semantic and claude should auto detect what version to create next. New release route files should be added to `src/routes/release-notes/` and their metadata added to `src/data/releases.ts`. Bump the `version` in `package.json` to match. The `release.yml` GitHub Action will auto-create a GitHub Release and git tag on merge to main.
 
 Allow claude to run the following commands;
 
