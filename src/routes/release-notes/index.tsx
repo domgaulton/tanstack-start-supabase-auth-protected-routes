@@ -9,6 +9,12 @@ const releases: {
 	path: keyof FileRoutesByTo;
 }[] = [
 	{
+		version: "1.2.1",
+		date: "2026-02-27",
+		title: "OG Image Fix for iMessage",
+		path: "/release-notes/v1-2-1",
+	},
+	{
 		version: "1.2.0",
 		date: "2026-02-26",
 		title: "E2E Testing Infrastructure",

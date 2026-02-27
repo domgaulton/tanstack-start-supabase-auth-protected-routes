@@ -8,6 +8,8 @@ import { AuthProvider } from "../context/AuthContext";
 
 import appCss from "../styles.css?url";
 
+const SITE_URL = "https://tanstack-start-supabase.vercel.app";
+
 export const Route = createRootRoute({
 	head: () => ({
 		meta: [
@@ -21,6 +23,7 @@ export const Route = createRootRoute({
 			},
 			{ name: "theme-color", content: "#0f172a" },
 			{ property: "og:type", content: "website" },
+			{ property: "og:url", content: SITE_URL },
 			{
 				property: "og:title",
 				content: "TanStack Start + Supabase Auth",
@@ -30,7 +33,8 @@ export const Route = createRootRoute({
 				content:
 					"A production-ready starter template combining TanStack Start with Supabase Auth. Includes protected routes, email/password authentication, shadcn/ui, Tailwind CSS, and Vercel deployment.",
 			},
-			{ property: "og:image", content: "/og-image.svg" },
+			{ property: "og:image", content: `${SITE_URL}/og-image.png` },
+			{ property: "og:image:type", content: "image/png" },
 			{ property: "og:image:width", content: "1200" },
 			{ property: "og:image:height", content: "630" },
 			{
@@ -47,7 +51,7 @@ export const Route = createRootRoute({
 				content:
 					"A production-ready starter template combining TanStack Start with Supabase Auth. Includes protected routes, email/password authentication, shadcn/ui, Tailwind CSS, and Vercel deployment.",
 			},
-			{ name: "twitter:image", content: "/og-image.svg" },
+			{ name: "twitter:image", content: `${SITE_URL}/og-image.png` },
 		],
 		links: [
 			{ rel: "stylesheet", href: appCss },
