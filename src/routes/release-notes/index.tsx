@@ -1,38 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, ExternalLink, Tag } from "lucide-react";
-import type { FileRoutesByTo } from "@/routeTree.gen";
-
-const releases: {
-	version: string;
-	date: string;
-	title: string;
-	path: keyof FileRoutesByTo;
-}[] = [
-	{
-		version: "1.2.1",
-		date: "2026-02-27",
-		title: "OG Image Fix for iMessage",
-		path: "/release-notes/v1-2-1",
-	},
-	{
-		version: "1.2.0",
-		date: "2026-02-26",
-		title: "E2E Testing Infrastructure",
-		path: "/release-notes/v1-2-0",
-	},
-	{
-		version: "1.1.0",
-		date: "2026-02-23",
-		title: "Onboarding Docs Added",
-		path: "/release-notes/v1-1-0",
-	},
-	{
-		version: "1.0.0",
-		date: "2026-02-22",
-		title: "Initial Release",
-		path: "/release-notes/v1-0-0",
-	},
-];
+import { releases } from "@/data/releases";
 
 export const Route = createFileRoute("/release-notes/")({
 	head: () => ({
