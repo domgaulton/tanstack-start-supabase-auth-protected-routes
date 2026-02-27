@@ -45,9 +45,6 @@ jobs:
       pull-requests: read
     outputs:
       supabase: ${{ steps.filter.outputs.supabase }}
-      # cleanup:e2e-start
-      skip_e2e: ${{ steps.skip.outputs.skip_e2e }}
-      # cleanup:e2e-end
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -57,23 +54,6 @@ jobs:
             supabase:
               - 'supabase/migrations/**'
               - 'supabase/config.toml'
-      # cleanup:e2e-start
-      - name: Check for no-e2e-test skip
-        id: skip
-        run: |
-          SKIP=false
-          if [[ "${{ github.head_ref }}${{ github.ref_name }}" == *"no-e2e-test"* ]]; then
-            SKIP=true
-          fi
-          if [[ "${{ github.event.head_commit.message }}" == *"no-e2e-test"* ]]; then
-            SKIP=true
-          fi
-          if [[ "${{ github.event.pull_request.title }}" == *"no-e2e-test"* ]]; then
-            SKIP=true
-          fi
-          echo "skip_e2e=$SKIP" >> "$GITHUB_OUTPUT"
-        shell: bash
-      # cleanup:e2e-end
 
   # Runs when supabase/** files changed — migration check + E2E in one job
   e2e-from-database-changes:
@@ -107,51 +87,4 @@ jobs:
           npm run db:types
           npm run build
 
-      # cleanup:e2e-start
-      # ── E2E (reuses the running Supabase) ──
-      - name: Seed database
-        run: npm run db:seed
 
-      - name: Run Playwright tests
-        run: npx playwright test
-
-      - name: Upload Playwright report
-        uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-      # cleanup:e2e-end
-
-  # cleanup:e2e-start
-  # Runs when no supabase/** changes — E2E only (no migration check needed)
-  e2e:
-    name: E2E Tests
-    needs: [detect-database-changes, code-quality]
-    if: >-
-      needs.detect-database-changes.outputs.supabase != 'true'
-      && needs.detect-database-changes.outputs.skip_e2e != 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-e2e
-
-      - name: Apply migrations, build, and seed
-        run: |
-          supabase db reset
-          npm run build
-          npm run db:seed
-
-      - name: Run Playwright tests
-        run: npx playwright test
-
-      - name: Upload Playwright report
-        uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-  # cleanup:e2e-end

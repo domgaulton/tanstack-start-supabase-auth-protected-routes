@@ -16,16 +16,6 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as cleanUpFeaturesRouteImport } from './routes/(clean-up)/features'
-import { Route as cleanUpCleanupRouteImport } from './routes/(clean-up)/cleanup'
-import { Route as cleanUpAboutRouteImport } from './routes/(clean-up)/about'
-import { Route as cleanUpReleaseNotesIndexRouteImport } from './routes/(clean-up)/release-notes/index'
-import { Route as cleanUpReleaseNotesV140RouteImport } from './routes/(clean-up)/release-notes/v1-4-0'
-import { Route as cleanUpReleaseNotesV130RouteImport } from './routes/(clean-up)/release-notes/v1-3-0'
-import { Route as cleanUpReleaseNotesV121RouteImport } from './routes/(clean-up)/release-notes/v1-2-1'
-import { Route as cleanUpReleaseNotesV120RouteImport } from './routes/(clean-up)/release-notes/v1-2-0'
-import { Route as cleanUpReleaseNotesV110RouteImport } from './routes/(clean-up)/release-notes/v1-1-0'
-import { Route as cleanUpReleaseNotesV100RouteImport } from './routes/(clean-up)/release-notes/v1-0-0'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -61,57 +51,6 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const cleanUpFeaturesRoute = cleanUpFeaturesRouteImport.update({
-  id: '/(clean-up)/features',
-  path: '/features',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const cleanUpCleanupRoute = cleanUpCleanupRouteImport.update({
-  id: '/(clean-up)/cleanup',
-  path: '/cleanup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const cleanUpAboutRoute = cleanUpAboutRouteImport.update({
-  id: '/(clean-up)/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const cleanUpReleaseNotesIndexRoute =
-  cleanUpReleaseNotesIndexRouteImport.update({
-    id: '/(clean-up)/release-notes/',
-    path: '/release-notes/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const cleanUpReleaseNotesV140Route = cleanUpReleaseNotesV140RouteImport.update({
-  id: '/(clean-up)/release-notes/v1-4-0',
-  path: '/release-notes/v1-4-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const cleanUpReleaseNotesV130Route = cleanUpReleaseNotesV130RouteImport.update({
-  id: '/(clean-up)/release-notes/v1-3-0',
-  path: '/release-notes/v1-3-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const cleanUpReleaseNotesV121Route = cleanUpReleaseNotesV121RouteImport.update({
-  id: '/(clean-up)/release-notes/v1-2-1',
-  path: '/release-notes/v1-2-1',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const cleanUpReleaseNotesV120Route = cleanUpReleaseNotesV120RouteImport.update({
-  id: '/(clean-up)/release-notes/v1-2-0',
-  path: '/release-notes/v1-2-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const cleanUpReleaseNotesV110Route = cleanUpReleaseNotesV110RouteImport.update({
-  id: '/(clean-up)/release-notes/v1-1-0',
-  path: '/release-notes/v1-1-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const cleanUpReleaseNotesV100Route = cleanUpReleaseNotesV100RouteImport.update({
-  id: '/(clean-up)/release-notes/v1-0-0',
-  path: '/release-notes/v1-0-0',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -119,17 +58,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/about': typeof cleanUpAboutRoute
-  '/cleanup': typeof cleanUpCleanupRoute
-  '/features': typeof cleanUpFeaturesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/release-notes/v1-0-0': typeof cleanUpReleaseNotesV100Route
-  '/release-notes/v1-1-0': typeof cleanUpReleaseNotesV110Route
-  '/release-notes/v1-2-0': typeof cleanUpReleaseNotesV120Route
-  '/release-notes/v1-2-1': typeof cleanUpReleaseNotesV121Route
-  '/release-notes/v1-3-0': typeof cleanUpReleaseNotesV130Route
-  '/release-notes/v1-4-0': typeof cleanUpReleaseNotesV140Route
-  '/release-notes/': typeof cleanUpReleaseNotesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -137,17 +66,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/about': typeof cleanUpAboutRoute
-  '/cleanup': typeof cleanUpCleanupRoute
-  '/features': typeof cleanUpFeaturesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/release-notes/v1-0-0': typeof cleanUpReleaseNotesV100Route
-  '/release-notes/v1-1-0': typeof cleanUpReleaseNotesV110Route
-  '/release-notes/v1-2-0': typeof cleanUpReleaseNotesV120Route
-  '/release-notes/v1-2-1': typeof cleanUpReleaseNotesV121Route
-  '/release-notes/v1-3-0': typeof cleanUpReleaseNotesV130Route
-  '/release-notes/v1-4-0': typeof cleanUpReleaseNotesV140Route
-  '/release-notes': typeof cleanUpReleaseNotesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -157,17 +76,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/(clean-up)/about': typeof cleanUpAboutRoute
-  '/(clean-up)/cleanup': typeof cleanUpCleanupRoute
-  '/(clean-up)/features': typeof cleanUpFeaturesRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/(clean-up)/release-notes/v1-0-0': typeof cleanUpReleaseNotesV100Route
-  '/(clean-up)/release-notes/v1-1-0': typeof cleanUpReleaseNotesV110Route
-  '/(clean-up)/release-notes/v1-2-0': typeof cleanUpReleaseNotesV120Route
-  '/(clean-up)/release-notes/v1-2-1': typeof cleanUpReleaseNotesV121Route
-  '/(clean-up)/release-notes/v1-3-0': typeof cleanUpReleaseNotesV130Route
-  '/(clean-up)/release-notes/v1-4-0': typeof cleanUpReleaseNotesV140Route
-  '/(clean-up)/release-notes/': typeof cleanUpReleaseNotesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -177,17 +86,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/logout'
     | '/reset-password'
-    | '/about'
-    | '/cleanup'
-    | '/features'
     | '/dashboard'
-    | '/release-notes/v1-0-0'
-    | '/release-notes/v1-1-0'
-    | '/release-notes/v1-2-0'
-    | '/release-notes/v1-2-1'
-    | '/release-notes/v1-3-0'
-    | '/release-notes/v1-4-0'
-    | '/release-notes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -195,17 +94,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/logout'
     | '/reset-password'
-    | '/about'
-    | '/cleanup'
-    | '/features'
     | '/dashboard'
-    | '/release-notes/v1-0-0'
-    | '/release-notes/v1-1-0'
-    | '/release-notes/v1-2-0'
-    | '/release-notes/v1-2-1'
-    | '/release-notes/v1-3-0'
-    | '/release-notes/v1-4-0'
-    | '/release-notes'
   id:
     | '__root__'
     | '/'
@@ -214,17 +103,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/logout'
     | '/reset-password'
-    | '/(clean-up)/about'
-    | '/(clean-up)/cleanup'
-    | '/(clean-up)/features'
     | '/_authenticated/dashboard'
-    | '/(clean-up)/release-notes/v1-0-0'
-    | '/(clean-up)/release-notes/v1-1-0'
-    | '/(clean-up)/release-notes/v1-2-0'
-    | '/(clean-up)/release-notes/v1-2-1'
-    | '/(clean-up)/release-notes/v1-3-0'
-    | '/(clean-up)/release-notes/v1-4-0'
-    | '/(clean-up)/release-notes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -234,16 +113,6 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   LogoutRoute: typeof LogoutRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  cleanUpAboutRoute: typeof cleanUpAboutRoute
-  cleanUpCleanupRoute: typeof cleanUpCleanupRoute
-  cleanUpFeaturesRoute: typeof cleanUpFeaturesRoute
-  cleanUpReleaseNotesV100Route: typeof cleanUpReleaseNotesV100Route
-  cleanUpReleaseNotesV110Route: typeof cleanUpReleaseNotesV110Route
-  cleanUpReleaseNotesV120Route: typeof cleanUpReleaseNotesV120Route
-  cleanUpReleaseNotesV121Route: typeof cleanUpReleaseNotesV121Route
-  cleanUpReleaseNotesV130Route: typeof cleanUpReleaseNotesV130Route
-  cleanUpReleaseNotesV140Route: typeof cleanUpReleaseNotesV140Route
-  cleanUpReleaseNotesIndexRoute: typeof cleanUpReleaseNotesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -297,76 +166,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/(clean-up)/features': {
-      id: '/(clean-up)/features'
-      path: '/features'
-      fullPath: '/features'
-      preLoaderRoute: typeof cleanUpFeaturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/cleanup': {
-      id: '/(clean-up)/cleanup'
-      path: '/cleanup'
-      fullPath: '/cleanup'
-      preLoaderRoute: typeof cleanUpCleanupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/about': {
-      id: '/(clean-up)/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof cleanUpAboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/release-notes/': {
-      id: '/(clean-up)/release-notes/'
-      path: '/release-notes'
-      fullPath: '/release-notes/'
-      preLoaderRoute: typeof cleanUpReleaseNotesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/release-notes/v1-4-0': {
-      id: '/(clean-up)/release-notes/v1-4-0'
-      path: '/release-notes/v1-4-0'
-      fullPath: '/release-notes/v1-4-0'
-      preLoaderRoute: typeof cleanUpReleaseNotesV140RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/release-notes/v1-3-0': {
-      id: '/(clean-up)/release-notes/v1-3-0'
-      path: '/release-notes/v1-3-0'
-      fullPath: '/release-notes/v1-3-0'
-      preLoaderRoute: typeof cleanUpReleaseNotesV130RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/release-notes/v1-2-1': {
-      id: '/(clean-up)/release-notes/v1-2-1'
-      path: '/release-notes/v1-2-1'
-      fullPath: '/release-notes/v1-2-1'
-      preLoaderRoute: typeof cleanUpReleaseNotesV121RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/release-notes/v1-2-0': {
-      id: '/(clean-up)/release-notes/v1-2-0'
-      path: '/release-notes/v1-2-0'
-      fullPath: '/release-notes/v1-2-0'
-      preLoaderRoute: typeof cleanUpReleaseNotesV120RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/release-notes/v1-1-0': {
-      id: '/(clean-up)/release-notes/v1-1-0'
-      path: '/release-notes/v1-1-0'
-      fullPath: '/release-notes/v1-1-0'
-      preLoaderRoute: typeof cleanUpReleaseNotesV110RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(clean-up)/release-notes/v1-0-0': {
-      id: '/(clean-up)/release-notes/v1-0-0'
-      path: '/release-notes/v1-0-0'
-      fullPath: '/release-notes/v1-0-0'
-      preLoaderRoute: typeof cleanUpReleaseNotesV100RouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -389,16 +188,6 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   LogoutRoute: LogoutRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  cleanUpAboutRoute: cleanUpAboutRoute,
-  cleanUpCleanupRoute: cleanUpCleanupRoute,
-  cleanUpFeaturesRoute: cleanUpFeaturesRoute,
-  cleanUpReleaseNotesV100Route: cleanUpReleaseNotesV100Route,
-  cleanUpReleaseNotesV110Route: cleanUpReleaseNotesV110Route,
-  cleanUpReleaseNotesV120Route: cleanUpReleaseNotesV120Route,
-  cleanUpReleaseNotesV121Route: cleanUpReleaseNotesV121Route,
-  cleanUpReleaseNotesV130Route: cleanUpReleaseNotesV130Route,
-  cleanUpReleaseNotesV140Route: cleanUpReleaseNotesV140Route,
-  cleanUpReleaseNotesIndexRoute: cleanUpReleaseNotesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
