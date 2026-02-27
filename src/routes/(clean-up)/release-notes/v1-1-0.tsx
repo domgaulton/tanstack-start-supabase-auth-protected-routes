@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ReleaseNoteLayout } from "@/components/release-notes/ReleaseNoteLayout";
 import { getReleaseByVersion } from "@/data/releases";
 
-const release = getReleaseByVersion("1.3.0");
+const release = getReleaseByVersion("1.1.0");
 
-export const Route = createFileRoute("/release-notes/v1-3-0")({
+export const Route = createFileRoute("/(clean-up)/release-notes/v1-1-0")({
 	head: () => ({
 		meta: [
 			{

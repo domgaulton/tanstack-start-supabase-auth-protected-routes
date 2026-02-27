@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute("/(clean-up)/about")({
 	head: () => ({
 		meta: [
 			{ title: "About | TanStack Start + Supabase Auth" },

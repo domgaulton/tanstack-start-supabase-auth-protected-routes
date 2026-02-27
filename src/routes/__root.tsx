@@ -85,7 +85,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 							},
 						]}
 					/>
+					{/* cleanup:analytics-start */}
 					<Analytics />
+					{/* cleanup:analytics-end */}
 					<Scripts />
 				</AuthProvider>
 			</body>

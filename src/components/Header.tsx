@@ -79,6 +79,7 @@ export default function Header() {
 								<Home size={20} />
 								<span className="font-medium">Home</span>
 							</Link>
+							{/* cleanup:demo-pages-start */}
 							<Link
 								to="/about"
 								onClick={() => setIsOpen(false)}
@@ -91,6 +92,8 @@ export default function Header() {
 								<Info size={20} />
 								<span className="font-medium">About</span>
 							</Link>
+							{/* cleanup:demo-pages-end */}
+							{/* cleanup:demo-pages-start */}
 							<Link
 								to="/features"
 								onClick={() => setIsOpen(false)}
@@ -103,6 +106,7 @@ export default function Header() {
 								<Sparkles size={20} />
 								<span className="font-medium">Features</span>
 							</Link>
+							{/* cleanup:demo-pages-end */}
 							<Link
 								to="/login"
 								onClick={() => setIsOpen(false)}
@@ -115,6 +119,7 @@ export default function Header() {
 								<LogIn size={20} />
 								<span className="font-medium">Log in</span>
 							</Link>
+							{/* cleanup:demo-pages-start */}
 							<Link
 								to="/release-notes"
 								onClick={() => setIsOpen(false)}
@@ -127,11 +132,13 @@ export default function Header() {
 								<FileText size={20} />
 								<span className="font-medium">Release Notes</span>
 							</Link>
+							{/* cleanup:demo-pages-end */}
 						</>
 					)}
 
 					{!isLoading && user && (
 						<>
+							{/* cleanup:demo-pages-start */}
 							<Link
 								to="/about"
 								onClick={() => setIsOpen(false)}
@@ -144,6 +151,8 @@ export default function Header() {
 								<Info size={20} />
 								<span className="font-medium">About</span>
 							</Link>
+							{/* cleanup:demo-pages-end */}
+							{/* cleanup:demo-pages-start */}
 							<Link
 								to="/features"
 								onClick={() => setIsOpen(false)}
@@ -156,6 +165,7 @@ export default function Header() {
 								<Sparkles size={20} />
 								<span className="font-medium">Features</span>
 							</Link>
+							{/* cleanup:demo-pages-end */}
 							<Link
 								to="/dashboard"
 								onClick={() => setIsOpen(false)}
@@ -168,6 +178,7 @@ export default function Header() {
 								<LayoutDashboard size={20} />
 								<span className="font-medium">Dashboard</span>
 							</Link>
+							{/* cleanup:demo-pages-start */}
 							<Link
 								to="/release-notes"
 								onClick={() => setIsOpen(false)}
@@ -180,6 +191,7 @@ export default function Header() {
 								<FileText size={20} />
 								<span className="font-medium">Release Notes</span>
 							</Link>
+							{/* cleanup:demo-pages-end */}
 							<Link
 								to="/logout"
 								onClick={() => setIsOpen(false)}

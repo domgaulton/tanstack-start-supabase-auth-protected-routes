@@ -14,6 +14,31 @@ export interface ReleaseContentData {
 
 export const releases: ReleaseContentData[] = [
 	{
+		version: "1.4.0",
+		date: "2026-02-27",
+		title: "Project Cleanup Script",
+		path: "/release-notes/v1-4-0",
+		githubIssues: [38],
+		sections: [
+			{
+				title: "Interactive Cleanup CLI",
+				items: [
+					"Added `npm run cleanup` — interactive script to strip optional features from the starter template",
+					"Users can remove release notes, E2E tests, and Vercel Analytics with a single command",
+					"Includes project renaming with slug replacement across `package.json`, `.cta.json`, `supabase/config.toml`, and source files",
+				],
+			},
+			{
+				title: "How It Works",
+				items: [
+					"Built with `@clack/prompts` for a polished CLI experience with spinners and confirmations",
+					"Each feature removal cleanly deletes files, strips imports/JSX, updates CI workflows, and removes dependencies",
+					"Runs `npm install` automatically after changes to sync the lockfile",
+				],
+			},
+		],
+	},
+	{
 		version: "1.3.0",
 		date: "2026-02-27",
 		title: "Release Notes Single Source of Truth",

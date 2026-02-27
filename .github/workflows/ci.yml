@@ -45,7 +45,9 @@ jobs:
       pull-requests: read
     outputs:
       supabase: ${{ steps.filter.outputs.supabase }}
+      # cleanup:e2e-start
       skip_e2e: ${{ steps.skip.outputs.skip_e2e }}
+      # cleanup:e2e-end
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -55,6 +57,7 @@ jobs:
             supabase:
               - 'supabase/migrations/**'
               - 'supabase/config.toml'
+      # cleanup:e2e-start
       - name: Check for no-e2e-test skip
         id: skip
         run: |
@@ -70,10 +73,11 @@ jobs:
           fi
           echo "skip_e2e=$SKIP" >> "$GITHUB_OUTPUT"
         shell: bash
+      # cleanup:e2e-end
 
   # Runs when supabase/** files changed — migration check + E2E in one job
   e2e-from-database-changes:
-    name: E2E Tests + Database Migration (using Detected Database Changes)
+    name: E2E Tests + Database Migration (if detected)
     needs: [detect-database-changes, code-quality]
     if: >-
       needs.detect-database-changes.outputs.supabase == 'true'
@@ -103,6 +107,7 @@ jobs:
           npm run db:types
           npm run build
 
+      # cleanup:e2e-start
       # ── E2E (reuses the running Supabase) ──
       - name: Seed database
         run: npm run db:seed
@@ -117,7 +122,9 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+      # cleanup:e2e-end
 
+  # cleanup:e2e-start
   # Runs when no supabase/** changes — E2E only (no migration check needed)
   e2e:
     name: E2E Tests
@@ -147,3 +154,4 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+  # cleanup:e2e-end
