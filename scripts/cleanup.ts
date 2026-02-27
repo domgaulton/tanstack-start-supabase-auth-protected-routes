@@ -92,7 +92,12 @@ export function transformVitestConfigRemoveE2E(content: string): string {
 }
 
 export function transformCiYmlRemoveE2E(content: string): string {
-	return removeMarkedBlocks(content, "e2e");
+	let result = removeMarkedBlocks(content, "e2e");
+	result = result.replace(
+		"name: E2E Tests + Database Migration (if detected)",
+		"name: Test Database Migrations (if detected)",
+	);
+	return result;
 }
 
 export function transformGitignoreRemovePlaywright(content: string): string {
@@ -417,6 +422,10 @@ async function main() {
 	s.start("Running npm install...");
 	execSync("npm install", { cwd: ROOT, stdio: "ignore" });
 	s.stop("Dependencies synced.");
+
+	s.start("Regenerating route tree and building...");
+	execSync("npm run build", { cwd: ROOT, stdio: "ignore" });
+	s.stop("Route tree regenerated and build verified.");
 
 	s.start("Formatting code...");
 	execSync("npx biome check --write", { cwd: ROOT, stdio: "ignore" });

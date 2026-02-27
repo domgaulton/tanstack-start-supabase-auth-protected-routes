@@ -1,4 +1,6 @@
+// cleanup:demo-pages-start
 import { Link } from "@tanstack/react-router";
+// cleanup:demo-pages-end
 import { Check, ChevronRight, Copy } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { CopyableCode, TutorialStep } from "./TutorialStep";
@@ -48,6 +50,7 @@ export function DeploymentSteps() {
 				.
 			</p>
 			<ol className="mt-4 space-y-6 list-none">
+				{/* cleanup:demo-pages-start */}
 				<TutorialStep
 					title="0. (Optional) Clean up the starter template"
 					description={
@@ -69,6 +72,7 @@ export function DeploymentSteps() {
 						</div>
 					}
 				/>
+				{/* cleanup:demo-pages-end */}
 
 				<TutorialStep
 					title="1. Get your Supabase access token"

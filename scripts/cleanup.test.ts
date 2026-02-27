@@ -258,6 +258,9 @@ describe("cleanup transforms", () => {
 			expect(result).toContain("e2e-from-database-changes:");
 			expect(result).toContain("Verify migrations apply cleanly");
 			expect(result).toContain("Regenerate types and build");
+			// Job should be renamed after e2e removal
+			expect(result).toContain("Test Database Migrations (if detected)");
+			expect(result).not.toContain("E2E Tests + Database Migration");
 		});
 
 		it("removes Playwright block from .gitignore", () => {
