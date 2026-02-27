@@ -1,6 +1,5 @@
 {
-  "name": "tanstack-start-supabase-auth",
-  "version": "1.4.0",
+  "name": "cleanup-test",
   "private": true,
   "type": "module",
   "imports": {
@@ -11,8 +10,6 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run --passWithNoTests",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
     "format": "biome format",
     "lint": "biome lint",
     "check": "biome check",
@@ -23,7 +20,6 @@
     "db:seed": "tsx --env-file=.env supabase/seed.ts",
     "db:types": "supabase gen types typescript --local > src/types/database.types.ts && biome check --write src/types/database.types.ts",
     "db:migrate": "supabase migration up --local && npm run db:types",
-    "cleanup": "tsx scripts/cleanup.ts",
     "prepare": "husky"
   },
   "dependencies": {
@@ -35,7 +31,6 @@
     "@tanstack/react-router-ssr-query": "^1.131.7",
     "@tanstack/react-start": "^1.132.0",
     "@tanstack/router-plugin": "^1.132.0",
-    "@vercel/analytics": "^1.6.1",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "0.545.0",
@@ -48,8 +43,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
-    "@clack/prompts": "1.0.1",
-    "@playwright/test": "1.58.2",
     "@tanstack/devtools-vite": "^0.3.11",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
