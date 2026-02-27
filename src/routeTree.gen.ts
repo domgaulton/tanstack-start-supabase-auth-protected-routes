@@ -18,6 +18,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReleaseNotesIndexRouteImport } from './routes/release-notes/index'
+import { Route as ReleaseNotesV121RouteImport } from './routes/release-notes/v1-2-1'
 import { Route as ReleaseNotesV120RouteImport } from './routes/release-notes/v1-2-0'
 import { Route as ReleaseNotesV110RouteImport } from './routes/release-notes/v1-1-0'
 import { Route as ReleaseNotesV100RouteImport } from './routes/release-notes/v1-0-0'
@@ -67,6 +68,11 @@ const ReleaseNotesIndexRoute = ReleaseNotesIndexRouteImport.update({
   path: '/release-notes/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReleaseNotesV121Route = ReleaseNotesV121RouteImport.update({
+  id: '/release-notes/v1-2-1',
+  path: '/release-notes/v1-2-1',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReleaseNotesV120Route = ReleaseNotesV120RouteImport.update({
   id: '/release-notes/v1-2-0',
   path: '/release-notes/v1-2-0',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
   '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
   '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
+  '/release-notes/v1-2-1': typeof ReleaseNotesV121Route
   '/release-notes/': typeof ReleaseNotesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
   '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
   '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
+  '/release-notes/v1-2-1': typeof ReleaseNotesV121Route
   '/release-notes': typeof ReleaseNotesIndexRoute
 }
 export interface FileRoutesById {
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/release-notes/v1-0-0': typeof ReleaseNotesV100Route
   '/release-notes/v1-1-0': typeof ReleaseNotesV110Route
   '/release-notes/v1-2-0': typeof ReleaseNotesV120Route
+  '/release-notes/v1-2-1': typeof ReleaseNotesV121Route
   '/release-notes/': typeof ReleaseNotesIndexRoute
 }
 export interface FileRouteTypes {
@@ -146,6 +155,7 @@ export interface FileRouteTypes {
     | '/release-notes/v1-0-0'
     | '/release-notes/v1-1-0'
     | '/release-notes/v1-2-0'
+    | '/release-notes/v1-2-1'
     | '/release-notes/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/release-notes/v1-0-0'
     | '/release-notes/v1-1-0'
     | '/release-notes/v1-2-0'
+    | '/release-notes/v1-2-1'
     | '/release-notes'
   id:
     | '__root__'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/release-notes/v1-0-0'
     | '/release-notes/v1-1-0'
     | '/release-notes/v1-2-0'
+    | '/release-notes/v1-2-1'
     | '/release-notes/'
   fileRoutesById: FileRoutesById
 }
@@ -190,6 +202,7 @@ export interface RootRouteChildren {
   ReleaseNotesV100Route: typeof ReleaseNotesV100Route
   ReleaseNotesV110Route: typeof ReleaseNotesV110Route
   ReleaseNotesV120Route: typeof ReleaseNotesV120Route
+  ReleaseNotesV121Route: typeof ReleaseNotesV121Route
   ReleaseNotesIndexRoute: typeof ReleaseNotesIndexRoute
 }
 
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReleaseNotesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/release-notes/v1-2-1': {
+      id: '/release-notes/v1-2-1'
+      path: '/release-notes/v1-2-1'
+      fullPath: '/release-notes/v1-2-1'
+      preLoaderRoute: typeof ReleaseNotesV121RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/release-notes/v1-2-0': {
       id: '/release-notes/v1-2-0'
       path: '/release-notes/v1-2-0'
@@ -313,17 +333,9 @@ const rootRouteChildren: RootRouteChildren = {
   ReleaseNotesV100Route: ReleaseNotesV100Route,
   ReleaseNotesV110Route: ReleaseNotesV110Route,
   ReleaseNotesV120Route: ReleaseNotesV120Route,
+  ReleaseNotesV121Route: ReleaseNotesV121Route,
   ReleaseNotesIndexRoute: ReleaseNotesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
