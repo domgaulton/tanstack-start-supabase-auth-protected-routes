@@ -208,6 +208,15 @@ function removeDemoPages(): void {
 			transformIndexRemoveDemoPages(read("src/routes/index.tsx")),
 		);
 	}
+
+	// Modify DeploymentSteps.tsx — remove cleanup tutorial step and Link import
+	const deploymentSteps = "src/components/tutorial/DeploymentSteps.tsx";
+	if (existsSync(join(ROOT, deploymentSteps))) {
+		write(
+			deploymentSteps,
+			removeMarkedBlocks(read(deploymentSteps), "demo-pages"),
+		);
+	}
 }
 
 function removeReleases(): void {
