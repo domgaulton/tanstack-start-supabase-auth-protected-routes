@@ -238,22 +238,26 @@ describe("cleanup transforms", () => {
 			expect(result).toContain('"node_modules/**"');
 		});
 
-		it("removes e2e jobs from ci.yml but keeps migration-check", () => {
+	it("removes e2e steps from ci.yml but keeps migration and build steps", () => {
 			const original = readFile(".github/workflows/ci.yml");
-			expect(original).toContain("database-build:");
+			expect(original).toContain("e2e-from-database-changes:");
 			expect(original).toContain("e2e:");
-			expect(original).toContain("skip_e2e");
+			expect(original).toContain("Seed database");
+			expect(original).toContain("Run Playwright tests");
 
 			const result = transformCiYmlRemoveE2E(original);
 			expect(result).not.toEqual(original);
-			expect(result).not.toContain("skip_e2e");
+			// E2E steps should be removed
+			expect(result).not.toContain("Seed database");
+			expect(result).not.toContain("Run Playwright tests");
 			// Standalone e2e job should be removed
 			expect(result).not.toContain("\n  e2e:\n");
 			// These should remain
 			expect(result).toContain("code-quality:");
 			expect(result).toContain("detect-database-changes:");
-			expect(result).toContain("migration-check:");
-			expect(result).toContain("database-build:");
+			expect(result).toContain("e2e-from-database-changes:");
+			expect(result).toContain("Verify migrations apply cleanly");
+			expect(result).toContain("Regenerate types and build");
 		});
 
 		it("removes Playwright block from .gitignore", () => {

@@ -69,7 +69,6 @@ Removes Playwright E2E test infrastructure:
 |---------|-------------|
 | `e2e/` | All E2E test files and helpers |
 | `playwright.config.ts` | Playwright configuration |
-| `.github/actions/setup-e2e/` | Composite action for CI E2E setup |
 | `docs/e2e-tests/` | E2E test documentation |
 
 Also modifies:
@@ -78,7 +77,7 @@ Also modifies:
 |------|--------|
 | `package.json` | Removes `test:e2e`, `test:e2e:ui` scripts and `@playwright/test` dependency |
 | `vitest.config.ts` | Removes `e2e/**` from the exclude list |
-| `.github/workflows/ci.yml` | Removes the standalone `e2e` job and E2E steps from `database-build` (keeps `code-quality`, `detect-database-changes`, `migration-check`, and database build/integration steps) |
+| `.github/workflows/ci.yml` | Removes the standalone `e2e` job and E2E steps from `e2e-from-database-changes` (keeps migration check, type generation, and build steps) |
 | `.gitignore` | Removes the Playwright section |
 
 ## How it works

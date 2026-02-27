@@ -222,7 +222,6 @@ function removeE2ETests(): void {
 	// Delete files and directories
 	remove("e2e");
 	remove("playwright.config.ts");
-	remove(".github/actions/setup-e2e");
 	remove("docs/e2e-tests");
 	removeDirIfEmpty("docs");
 
