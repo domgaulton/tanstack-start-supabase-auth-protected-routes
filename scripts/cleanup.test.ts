@@ -11,6 +11,7 @@ import {
 	transformHeaderRemoveDemoPages,
 	transformIndexRemoveDemoPages,
 	transformPackageJsonRemoveAnalytics,
+	transformPackageJsonRemoveCleanup,
 	transformPackageJsonRemoveE2E,
 	transformPackageJsonRemoveVersion,
 	transformRenameInContent,
@@ -239,18 +240,20 @@ describe("cleanup transforms", () => {
 
 		it("removes e2e jobs from ci.yml but keeps migration-check", () => {
 			const original = readFile(".github/workflows/ci.yml");
-			expect(original).toContain("e2e-from-database-changes:");
+			expect(original).toContain("database-build:");
 			expect(original).toContain("e2e:");
 			expect(original).toContain("skip_e2e");
 
 			const result = transformCiYmlRemoveE2E(original);
 			expect(result).not.toEqual(original);
-			expect(result).not.toContain("e2e-from-database-changes:");
 			expect(result).not.toContain("skip_e2e");
+			// Standalone e2e job should be removed
+			expect(result).not.toContain("\n  e2e:\n");
 			// These should remain
 			expect(result).toContain("code-quality:");
 			expect(result).toContain("detect-database-changes:");
 			expect(result).toContain("migration-check:");
+			expect(result).toContain("database-build:");
 		});
 
 		it("removes Playwright block from .gitignore", () => {
@@ -316,6 +319,20 @@ describe("cleanup transforms", () => {
 			const result = transformPackageJsonRemoveAnalytics(original);
 			expect(result).not.toEqual(original);
 			expect(result).not.toContain('"@vercel/analytics"');
+			expect(() => JSON.parse(result)).not.toThrow();
+		});
+	});
+
+	describe("selfCleanup", () => {
+		it("removes cleanup script and @clack/prompts from package.json", () => {
+			const original = readFile("package.json");
+			expect(original).toContain('"cleanup"');
+			expect(original).toContain('"@clack/prompts"');
+
+			const result = transformPackageJsonRemoveCleanup(original);
+			expect(result).not.toEqual(original);
+			expect(result).not.toContain('"cleanup"');
+			expect(result).not.toContain('"@clack/prompts"');
 			expect(() => JSON.parse(result)).not.toThrow();
 		});
 	});

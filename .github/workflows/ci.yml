@@ -103,18 +103,38 @@ jobs:
             exit 1
           fi
 
-  # cleanup:e2e-start
-  e2e-from-database-changes:
-    name: E2E Tests (with Database Changes)
+  database-build:
+    name: Database Integration Check
     needs: [detect-database-changes, code-quality, migration-check]
-    if: >-
-      needs.detect-database-changes.outputs.supabase == 'true'
-      && needs.detect-database-changes.outputs.skip_e2e != 'true'
+    if: needs.detect-database-changes.outputs.supabase == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-e2e
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase
+        run: supabase start -x realtime,storage,imgproxy,inbucket,pgadmin-schema-diff,migra,pgbouncer,vector,edge-runtime
+        shell: bash
+
+      - name: Write .env from Supabase status
+        run: |
+          supabase status -o env | sed \
+            -e 's/^API_URL=/SUPABASE_URL=/' \
+            -e 's/^SERVICE_ROLE_KEY=/SUPABASE_SECRET_KEY=/' \
+            -e 's/^ANON_KEY=/VITE_SUPABASE_ANON_KEY=/' \
+            > .env
+          grep '^SUPABASE_URL=' .env | sed 's/^SUPABASE_URL=/VITE_SUPABASE_URL=/' >> .env
+        shell: bash
 
       - name: Apply migrations, regenerate types, and build
         run: |
@@ -122,20 +142,30 @@ jobs:
           npm run db:types
           npm run build
 
+      # cleanup:e2e-start
+      - name: Install Playwright
+        if: needs.detect-database-changes.outputs.skip_e2e != 'true'
+        run: npx playwright install --with-deps chromium
+        shell: bash
+
       - name: Seed database
+        if: needs.detect-database-changes.outputs.skip_e2e != 'true'
         run: npm run db:seed
 
       - name: Run Playwright tests
+        if: needs.detect-database-changes.outputs.skip_e2e != 'true'
         run: npx playwright test
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: needs.detect-database-changes.outputs.skip_e2e != 'true' && !cancelled()
         with:
-          name: playwright-report
+          name: playwright-report-database
           path: playwright-report/
           retention-days: 30
+      # cleanup:e2e-end
 
+  # cleanup:e2e-start
   e2e:
     name: E2E Tests
     needs: [detect-database-changes, code-quality]

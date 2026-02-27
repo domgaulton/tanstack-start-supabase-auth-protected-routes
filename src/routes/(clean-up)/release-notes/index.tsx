@@ -71,5 +71,5 @@ function ReleaseNotesIndex() {
 				</div>
 			</section>
 		</div>
-	)
+	);
 }

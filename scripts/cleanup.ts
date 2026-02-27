@@ -123,6 +123,13 @@ export function transformPackageJsonRemoveAnalytics(content: string): string {
 	return content.replace(/\s+"@vercel\/analytics": "[^"]+",\n/, "\n");
 }
 
+export function transformPackageJsonRemoveCleanup(content: string): string {
+	let result = content;
+	result = result.replace(/\s+"cleanup": "[^"]+",\n/, "\n");
+	result = result.replace(/\s+"@clack\/prompts": "[^"]+",\n/, "\n");
+	return result;
+}
+
 export function transformRenameInContent(
 	content: string,
 	newName: string,
@@ -393,6 +400,20 @@ async function main() {
 		renameProject(projectName);
 		s.stop(`Renamed to "${projectName}".`);
 	}
+
+	// Remove the cleanup script itself, its tests, docs, and dependencies
+	s.start("Removing cleanup script...");
+	remove("scripts/cleanup.ts");
+	remove("scripts/cleanup.test.ts");
+	remove("docs/cleanup");
+	removeDirIfEmpty("docs");
+	if (existsSync(join(ROOT, "package.json"))) {
+		write(
+			"package.json",
+			transformPackageJsonRemoveCleanup(read("package.json")),
+		);
+	}
+	s.stop("Removed cleanup script.");
 
 	s.start("Running npm install...");
 	execSync("npm install", { cwd: ROOT, stdio: "ignore" });
